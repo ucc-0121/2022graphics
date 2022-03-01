@@ -1,5 +1,6 @@
 # 2022graphics
-# 第一個OPENGL程式
+# week01滴上課筆記爹斯 
+## 第一個OPENGL程式
 ```
 0.將CodeBlocks mingw 17.12安裝好
 
