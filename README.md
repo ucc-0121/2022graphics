@@ -164,3 +164,145 @@ PS. Chrome記得再登入哦~
     glEnd();
 2.就可以完成一個類似的三角形拉(灑花✧*｡٩(ˊᗜˋ*)و
 ```
+#Week03
+
+##先做跟上禮拜一樣的步驟
+```
+1.至https://jsyeh.org/3dcg10
+
+   下載data.zip windows.zip 
+
+1-2.windows.zip =解壓=> 下載\windows\Transformation.exe
+
+  data.zip =解壓=>下載\windows\data\模型.org
+
+
+
+  1-3.執行Transformation.exe
+    (右下角)點擊右鍵:可以更換其他模型
+
+
+
+    (下方)拖曳綠色的數值:可以上下、左右、前後移動
+     
+
+
+
+```
+##我們要透過上週的茶壺程式進行變更
+```
+(如果沒有程式碼的可以複製這裡~)
+#include <GL/glut.h>
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,0);
+    glutSolidTeapot(0.3);
+
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutCreateWindow("第02週的程式喔!!");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+ 
+2-1.這次要做的是移動，所以再加上幾段程式碼
+    
+
+
+   PS.畫上螢光筆的部分分別是
+         glPushMatrix();//備份矩陣
+         glTranslatef(0.5,0.5,0);//右上角升
+         glPopMatrix();//還原矩陣
+
+2-2.為了更有效的做出程式 所以我們宣告了一個函式(紅色框框)
+
+
+2-3.將剛剛的程式碼複製後貼上在新開的GLUT專案
+      
+
+  (透過glutMouseFunc()就可以使用滑鼠點擊感變物件位置~)
+程式碼的部分~
+```
+#include <GL/glut.h>
+float mouseX=0,mouseY=0;
+void myTeapot(float x,float y)
+{
+    glPushMatrix();//備份矩陣
+        glTranslatef(x,y,0);
+        glColor3f(1,1,0);
+        glutSolidTeapot(0.3);
+    glPopMatrix();//還原矩陣
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    myTeapot( (mouseX-150)/150.0,-(mouseY-150)/150.0);
+    glutSwapBuffers();
+ }
+ void mouse(int button,int state,int x,int y)
+ {
+    mouseX=x;mouseY=y;
+ }
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week03 移動");
+
+    glutDisplayFunc(display);
+    glutMouseFunc(mouse);
+
+    glutMainLoop();
+ }
+
+```
+2-4.每點擊一次可以得到座標位置
+
+
+
+程式碼兒~
+#include <GL/glut.h>
+#include <stdio.h>
+float mouseX=0,mouseY=0;
+void myTeapot(float x,float y)
+{
+    glPushMatrix();//備份矩陣
+        glTranslatef(x,y,0);
+        glColor3f(1,1,0);
+        glutSolidTeapot(0.1);
+    glPopMatrix();//還原矩陣
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    myTeapot( (mouseX-150)/150.0,-(mouseY-150)/150.0);
+    glutSwapBuffers();
+ }
+ void mouse(int button,int state,int x,int y)
+ {
+     printf("%d %d %d %d\n",button,state,x,y);
+    mouseX=x;mouseY=y;
+ }
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week03 移動");
+
+    glutDisplayFunc(display);
+    glutMouseFunc(mouse);
+
+    glutMainLoop();
+ }
+
+```
+
+
+
