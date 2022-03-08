@@ -164,9 +164,9 @@ PS. Chrome記得再登入哦~
     glEnd();
 2.就可以完成一個類似的三角形拉(灑花✧*｡٩(ˊᗜˋ*)و
 ```
-#Week03
+# Week03
 
-##先做跟上禮拜一樣的步驟
+## 先做跟上禮拜一樣的步驟
 ```
 1.至https://jsyeh.org/3dcg10
 
@@ -189,7 +189,7 @@ PS. Chrome記得再登入哦~
 
 
 ```
-##我們要透過上週的茶壺程式進行變更
+## 我們要透過上週的茶壺程式進行變更
 ```
 (如果沒有程式碼的可以複製這裡~)
 #include <GL/glut.h>
@@ -211,7 +211,8 @@ PS. Chrome記得再登入哦~
 
     glutMainLoop();
  }
- 
+ ```
+ ```
 2-1.這次要做的是移動，所以再加上幾段程式碼
     
 
@@ -229,7 +230,7 @@ PS. Chrome記得再登入哦~
 
   (透過glutMouseFunc()就可以使用滑鼠點擊感變物件位置~)
 程式碼的部分~
-```
+
 #include <GL/glut.h>
 float mouseX=0,mouseY=0;
 void myTeapot(float x,float y)
@@ -261,7 +262,6 @@ void myTeapot(float x,float y)
 
     glutMainLoop();
  }
-
 ```
 2-4.每點擊一次可以得到座標位置
 
