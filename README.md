@@ -230,7 +230,7 @@ PS. Chrome記得再登入哦~
 
   (透過glutMouseFunc()就可以使用滑鼠點擊感變物件位置~)
 程式碼的部分~
-
+```
 #include <GL/glut.h>
 float mouseX=0,mouseY=0;
 void myTeapot(float x,float y)
@@ -262,6 +262,7 @@ void myTeapot(float x,float y)
 
     glutMainLoop();
  }
+```
 ```
 2-4.每點擊一次可以得到座標位置
 
@@ -301,7 +302,7 @@ void myTeapot(float x,float y)
 
     glutMainLoop();
  }
-
+```
 ```
 
 
