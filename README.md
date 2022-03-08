@@ -221,7 +221,7 @@ PS. Chrome記得再登入哦~
 
 
 2-3.將剛剛的程式碼複製後貼上在新開的GLUT專案
-      
+```      
 
   (透過glutMouseFunc()就可以使用滑鼠點擊感變物件位置~)
 程式碼的部分~
@@ -257,7 +257,7 @@ void myTeapot(float x,float y)
 
     glutMainLoop();
  }
-
+```
 ```
 2-4.每點擊一次可以得到座標位置
 
