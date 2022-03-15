@@ -118,7 +118,7 @@ PS. Chrome記得再登入哦~
 成功Again ʚ(•”̮•)ɞ
 ```
 ## step02-2 做一個自己的GLUT專案
-```
+```C
 1.File->New->Project->選擇GLUT檔案
    檔名:week02_COLOR
 是這個圖式喔!!不要選錯了 (ᗒᗣᗕ)՞
@@ -148,7 +148,7 @@ PS. Chrome記得再登入哦~
 ```
 
 ## step3模仿windows.zip 中的Shapes
-```
+```C
 1.將上面step2-2中的程式做點修改
    (把原先打Teapot的那行註解後打上程式
     glBegin(GL_POLYGON);
@@ -167,7 +167,7 @@ PS. Chrome記得再登入哦~
 # Week03
 
 ## 先做跟上禮拜一樣的步驟
-```
+```C
 1.至https://jsyeh.org/3dcg10
 
    下載data.zip windows.zip 
@@ -225,7 +225,7 @@ PS. Chrome記得再登入哦~
 
   (透過glutMouseFunc()就可以使用滑鼠點擊感變物件位置~)
 程式碼的部分~
-```
+```C
 #include <GL/glut.h>
 float mouseX=0,mouseY=0;
 void myTeapot(float x,float y)
@@ -258,7 +258,7 @@ void myTeapot(float x,float y)
     glutMainLoop();
  }
 ```
-```
+```C
 2-4.每點擊一次可以得到座標位置
 
 
