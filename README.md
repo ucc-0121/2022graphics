@@ -344,4 +344,13 @@ ps.當x軸為1時，以ｘ軸為中心向前方旋轉
     glutMainLoop();
  }
 ```
-
+## 1-4使用MOUSE_MOTION功能
+```C
+其實就是加上這些程式碼
+void motion(int x,int y)
+ {
+    angle = x;
+    display();
+ }
+ glutMotionFunc(motion);
+```
