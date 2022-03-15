@@ -308,7 +308,7 @@ void myTeapot(float x,float y)
 2.windows.zip =解壓=> 下載\windows\Transformation.exe
     data.zip =解壓=>下載\windows\data\一堆模型
 ```
-##1-2
+## 1-2
 ```
 旋轉動作1:
 Ps.當y軸都為1時，以y軸為中心向右旋轉
@@ -320,7 +320,7 @@ ps.當x,y軸都為1時，以xy的中間值為中心向右下角旋轉
 ps.當x軸為1時，以ｘ軸為中心向前方旋轉
 ```
 ## 1-3用CodeBlocks開啟新專案 :week04_Rotate
-```
+```C
 可以做出一個可以政著旋轉的茶壺~
 
 ///此刻的程式碼
