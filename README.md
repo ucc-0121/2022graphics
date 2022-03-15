@@ -300,3 +300,48 @@ void myTeapot(float x,float y)
 
 
  ```
+ ### WEEK04今日主題:Rotate旋轉
+ ## 1-1
+```
+1.至https://jsyeh.org/3dcg10下載
+    data.zip windows.zip
+2.windows.zip =解壓=> 下載\windows\Transformation.exe
+    data.zip =解壓=>下載\windows\data\一堆模型
+```
+##1-2
+```
+旋轉動作1:
+Ps.當y軸都為1時，以y軸為中心向右旋轉
+
+旋轉動作2:
+ps.當x,y軸都為1時，以xy的中間值為中心向右下角旋轉
+
+旋轉動作3:
+ps.當x軸為1時，以ｘ軸為中心向前方旋轉
+```
+## 1-3用CodeBlocks開啟新專案 :week04_Rotate
+```
+可以做出一個可以政著旋轉的茶壺~
+
+///此刻的程式碼
+#include <GL/glut.h>
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix();
+        glRotatef(90,0,0,1);
+        glutSolidTeapot(0.3);
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutCreateWindow("第04週的程式喔!!");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+```
+
