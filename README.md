@@ -402,7 +402,7 @@ float angle=0,oldX=0;
 
                  做完後可以看到每按一次鍵盤會跳出滑鼠所在的座標      
 ## step2-1  多加一些函示，使得茶壺可以透過滑鼠拖曳
-
+```
 <<char範圍:-128~128>>
    <<unsigned:不要加上負號，使得數字範圍從0~255>> 
 <<callback函式:
@@ -411,7 +411,7 @@ float angle=0,oldX=0;
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
 >>
-
+```
 
  ## step3-1 結合前面教的mouse和motion函示
          將floatX,y數值進行改變，將程式更優化(圖案不卡頓)
