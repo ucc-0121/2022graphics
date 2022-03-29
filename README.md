@@ -543,7 +543,7 @@ GLflaot light_pos[]={-2.0,2.0,2.0,1.0};陣列
 
 2-1-3.從GLUT偷程式碼(透過CRTL+F查找LIGHT函式)<=有陣列宣告和函示呼叫
 ```
-函式呼叫
+### 函式呼叫
 ```C
 
 const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -556,7 +556,7 @@ const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
 const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
 const GLfloat high_shininess[] = { 100.0f };
 ```
-函式宣告
+### 函式宣告
 ```C
  glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
