@@ -511,6 +511,38 @@ int oldX=0,oldY=0;
     glutMainLoop();
  }
 ```
+# week06 主題: 打光
+## step01.與重複上週步驟:
+```C
+1-1至https://jsyeh.org/3dcg10(下載data.zip windows.zip )
+
+1-2.windows.zip =解壓=> 下載\windows\Light Material.exe
+
+    data.zip =解壓=>下載\windows\data\模型.org
+
+(左上)左鍵drg可以旋轉  (左上)右鍵可以換模型 (左下)右鍵可以換Material
+```
+## step02. 解釋光的性質 glLightfv(GL_LIGHT,GL_POSITION,陣列)
+```C
+LIGHT=>第幾個燈
+
+POSITION=>設定燈的位置
+
+gl=>使用opengl  ,   fv=> float vector(陣列)
+
+GLflaot light_pos[]={-2.0,2.0,2.0,1.0};陣列
+```
+```
+實作時間٩(๑❛ᴗ❛๑)۶
+
+2-1-1.Moodle 下載 freeglut....zip
+
+2-1-2.將桌面freeglut 中的 lib裡面有 libfreeglut.a複製貼在同一資料夾中，後將其檔案名稱改成libglut32.a
+
+(是為了能在CodeBlocks中成功開啟檔案!
+
+2-1-3.從GLUT偷程式碼(透過CRTL+F查找LIGHT函式)<=有陣列宣告和函示呼叫
+```
 
 
 
