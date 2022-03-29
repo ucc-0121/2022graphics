@@ -581,7 +581,7 @@ const GLfloat high_shininess[] = { 100.0f };
     glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 
 ```
-## step03.將偷來的程式碼帶入之前教的黃色茶壺
+## step03-1.將偷來的程式碼帶入之前教的黃色茶壺
 ```C
 目前進度程式碼:
 #include <GL/glut.h>
@@ -634,5 +634,11 @@ const GLfloat high_shininess[] = { 100.0f };
  (秀出了帶有光澤的茶壺醬 ♫.(◕∠◕).♫)
 
 ```
-
+## step03-2.在float後面宣告一個angle,使得因為有角度兒可以旋轉
+```C
+加入程式碼
+float x=150,y=150,z=0,scale=1.0,angle=0.0;
+glRotatedf(angle,0,1,0);
+angle+=(mouseX-oldX)
+```
 
