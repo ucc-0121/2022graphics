@@ -464,7 +464,8 @@ int oldX=0,oldY=0;
             加入程式碼<<scale=1.0;
             if(mouseX-oldX>0) scale*=1.01;
             if(mouseX-oldX<0) scale*=0.99;
-
+```
+```C
 >最終程式碼<
 #include <GL/glut.h>
 #include <stdio.h>
