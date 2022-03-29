@@ -300,7 +300,7 @@ void myTeapot(float x,float y)
 
 
  ```
- ### WEEK04今日主題:Rotate旋轉
+ # WEEK04今日主題:Rotate旋轉
  ## 1-1
 ```
 1.至https://jsyeh.org/3dcg10下載
@@ -391,7 +391,7 @@ float angle=0,oldX=0;
     glutMainLoop();
  }
 ```
-#week05
+# week05
 ```
 >今日介紹 電腦圖學之父Ivan Sutherland --Sketchpad<
   step0-1 windows.zip =解壓=> 下載\windows\Transformation.exe
