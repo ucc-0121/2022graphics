@@ -1065,7 +1065,30 @@ const GLfloat high_shininess[] = { 100.0f };
        把 sourse.zip看裡面的3個程式 glm.h glm.c lightmaterial.cpp
        拿裡面的程式來用，便能讀入3D模型
 ```
-
+## Step4-2-1
+```C
+   #include <GL/glut.h>//是系統裡的include 裡的檔案
+```
+```C
+   #include "glm.h" //雙引號，同目錄裡的檔案
+```
+```C
+   GLMmodel* pmodel = NULL;//指到GLMmodel模型的指標，NULL表示還沒完成
+```
+```C
+    void
+    drawmodel(void)
+       {
+        if (!pmodel) {
+	    pmodel = glmReadOBJ("data/soccerball.obj");
+	    if (!pmodel) exit(0);
+	    glmUnitize(pmodel);
+	    glmFacetNormals(pmodel);
+	    glmVertexNormals(pmodel, 90.0);
+        }
+     glmDraw(pmodel, GLM_SMOOTH);
+        }//用來畫3D模型的程式碼，學習他            
+  
 
                    
   
