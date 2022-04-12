@@ -764,3 +764,528 @@ int oldX=0,oldY=0,now=0;///1移動2轉動3縮放
  }
 
 ```
+# Week08 
+ ## Step0. 重複上上週的步驟
+
+ ## 0-1 至https://jsyeh.org/3dcg10 下載3個檔案
+
+ ## 0-2 
+ ```
+     windows.zip =解壓=> 下載\windows\Light Material.exe
+
+     data.zip =解壓=>下載\windows\data\模型.org
+
+     source.zip
+
+    開啟LightMaterial.exe(今日的主角)
+ ```
+
+ ## Step1. 複習上週的打光程式，確定大家在家可以執行
+
+##  Step2.實作時間٩(๑❛ᴗ❛๑)۶
+```
+      2-1-1.Moodle 下載 freeglut....zip
+
+      2-1-2.將桌面freeglut 中的 lib裡面有 libfreeglut.a複製貼在同一資料夾中，
+
+      後將其檔案名稱改成 libglut32.a(是為了能在CodeBlocks中成功開啟檔案!
+
+      2-1-3.從GLUT，source.zip偷程式碼，放入Notepad++
+
+```
+  
+
+  ## Step3.了解GLUT範例 sample.cpp 177行做甚麼事
+  ```C
+
+  /*
+
+ * GLUT Shapes Demo
+
+ *
+
+ * Written by Nigel Stewart November 2003
+
+ *
+
+ * This program is test harness for the sphere, cone
+
+ * and torus shapes in GLUT.
+
+ *
+
+ * Spinning wireframe and smooth shaded shapes are
+
+ * displayed until the ESC or q key is pressed.  The
+
+ * number of geometry stacks and slices can be adjusted
+
+ * using the + and - keys.
+
+ */
+
+
+
+#ifdef __APPLE__
+
+#include <GLUT/glut.h>
+
+#else
+
+#include <GL/glut.h>
+
+#endif
+
+
+
+#include <stdlib.h>
+
+
+
+static int slices = 16;
+
+static int stacks = 16;
+
+
+
+/* GLUT callback Handlers */
+
+
+
+static void resize(int width, int height)
+
+{
+
+    const float ar = (float) width / (float) height;
+
+
+
+    glViewport(0, 0, width, height);
+
+    glMatrixMode(GL_PROJECTION);
+
+    glLoadIdentity();
+
+    glFrustum(-ar, ar, -1.0, 1.0, 2.0, 100.0);
+
+
+
+    glMatrixMode(GL_MODELVIEW);
+
+    glLoadIdentity() ;
+
+}
+
+
+
+static void display(void)
+
+{
+
+    const double t = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+
+    const double a = t*90.0;
+
+
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glColor3d(1,0,0);
+
+
+
+    glPushMatrix();
+
+        glTranslated(-2.4,1.2,-6);
+
+        glRotated(60,1,0,0);
+
+        glRotated(a,0,0,1);
+
+        glutSolidSphere(1,slices,stacks);
+
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+
+        glTranslated(0,1.2,-6);
+
+        glRotated(60,1,0,0);
+
+        glRotated(a,0,0,1);
+
+        glutSolidCone(1,1,slices,stacks);
+
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+
+        glTranslated(2.4,1.2,-6);
+
+        glRotated(60,1,0,0);
+
+        glRotated(a,0,0,1);
+
+        glutSolidTorus(0.2,0.8,slices,stacks);
+
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+
+        glTranslated(-2.4,-1.2,-6);
+
+        glRotated(60,1,0,0);
+
+        glRotated(a,0,0,1);
+
+        glutWireSphere(1,slices,stacks);
+
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+
+        glTranslated(0,-1.2,-6);
+
+        glRotated(60,1,0,0);
+
+        glRotated(a,0,0,1);
+
+        glutWireCone(1,1,slices,stacks);
+
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+
+        glTranslated(2.4,-1.2,-6);
+
+        glRotated(60,1,0,0);
+
+        glRotated(a,0,0,1);
+
+        glutWireTorus(0.2,0.8,slices,stacks);
+
+    glPopMatrix();
+
+
+
+    glutSwapBuffers();
+
+}
+
+
+
+
+
+static void key(unsigned char key, int x, int y)
+
+{
+
+    switch (key)
+
+    {
+
+        case 27 :
+
+        case 'q':
+
+            exit(0);
+
+            break;
+
+
+
+        case '+':
+
+            slices++;
+
+            stacks++;
+
+            break;
+
+
+
+        case '-':
+
+            if (slices>3 && stacks>3)
+
+            {
+
+                slices--;
+
+                stacks--;
+
+            }
+
+            break;
+
+    }
+
+
+
+    glutPostRedisplay();
+
+}
+
+
+
+static void idle(void)
+
+{
+
+    glutPostRedisplay();
+
+}
+
+
+
+const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+
+
+
+const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+
+const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+
+const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+const GLfloat high_shininess[] = { 100.0f };
+
+
+
+/* Program entry point */
+
+
+
+int main(int argc, char *argv[])
+
+{
+
+    glutInit(&argc, argv);
+
+    glutInitWindowSize(640,480);
+
+    glutInitWindowPosition(10,10);
+
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+
+
+
+    glutCreateWindow("GLUT Shapes");
+
+
+
+    glutReshapeFunc(resize);
+
+    glutDisplayFunc(display);
+
+    glutKeyboardFunc(key);
+
+    glutIdleFunc(idle);
+
+
+
+    glClearColor(1,1,1,1);
+
+    glEnable(GL_CULL_FACE);
+
+    glCullFace(GL_BACK);
+
+
+
+    glEnable(GL_DEPTH_TEST);
+
+    glDepthFunc(GL_LESS);
+
+
+
+    glEnable(GL_LIGHT0);
+
+    glEnable(GL_NORMALIZE);
+
+    glEnable(GL_COLOR_MATERIAL);
+
+    glEnable(GL_LIGHTING);
+
+
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
+
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
+
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+
+    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+
+
+
+    glutMainLoop();
+
+
+
+    return EXIT_SUCCESS;
+
+}
+```
+```
+    GLUT callback?會被GLUT呼叫的函示
+
+    (我們寫的那些display() keyboard() mouse() motion()函示)
+```
+ ## 期中考題
+```C
+glPushMatrix();//備份矩陣
+
+  glTranslatef(x,y,z);//移動
+
+  glRotatef(角度,x,y,z);//轉動
+
+  glScalef(x,y,z);//縮放
+
+glPopMatrix();//還原矩陣
+```
+## 函示呼叫
+```C
+const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+
+
+
+const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+
+const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+
+const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+
+const GLfloat high_shininess[] = { 100.0f };
+```
+## 函示宣告
+```C
+ glEnable(GL_DEPTH_TEST);
+
+    glDepthFunc(GL_LESS);
+
+
+
+    glEnable(GL_LIGHT0);
+
+    glEnable(GL_NORMALIZE);
+
+    glEnable(GL_COLOR_MATERIAL);
+
+    glEnable(GL_LIGHTING);
+
+
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
+
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
+
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+
+
+    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+```
+ ## Step4.拿去上週的程式碼(week06_light)
+ ```C
+  #include <GL/glut.h>
+   const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
+   const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+   const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+   const GLfloat light_position[] = { 2.0f, 5.0f, -5.0f, 0.0f };
+
+   const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+   const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+   const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+   const GLfloat high_shininess[] = { 100.0f };
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glColor3f(1,1,0);
+        glutSolidTeapot(0.3);
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week06 light");
+
+    glutDisplayFunc(display);//
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+
+    glutMainLoop();
+ }
+ ```
+  ## Step 4-1 git 下載你上週的程式
+  ```
+          git clone 下來 或在你的專案資料夾裡 git pull
+          把上週的light檔案在NOTEPAD++裡開啟，複製貼上在WEEK08的main.cpp
+          執行時會跑出有光澤的黃色茶壺
+```
+  ## Step 4-2
+  ```
+       把 sourse.zip看裡面的3個程式 glm.h glm.c lightmaterial.cpp
+       拿裡面的程式來用，便能讀入3D模型
+```
+
+
+                   
+  
