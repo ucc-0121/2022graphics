@@ -1087,8 +1087,19 @@ const GLfloat high_shininess[] = { 100.0f };
 	    glmVertexNormals(pmodel, 90.0);
         }
      glmDraw(pmodel, GLM_SMOOTH);
-        }//用來畫3D模型的程式碼，學習他            
-  
-
+        }//用來畫3D模型的程式碼，學習他   
+``` 
+## Step4-2-2
+```
+   1.用哪一行程式? drawmodel()
+   2.檔案在哪裡?要放在working dir工作目錄
+   3.在CodeBlocks下方藍色的Build Log說我們的目錄在...
+   4.C:\Users\YUXUAN\Desktop\freeglut\bin
+   5.把剛剛下載的DATA.zip裡的data資料夾整個放在工作目錄中
+   6.把glm.h 和 glm.c(改名成glm.cpp) 放在week08_model目錄中
+   7.附檔名要看到才行
+   8.在week08_model專案中ADD 剛剛同目錄的glm.cpp
+(以上步驟做完會出現一顆黃色足球😭😭😭)
+```
                    
   
