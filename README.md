@@ -1100,6 +1100,7 @@ const GLfloat high_shininess[] = { 100.0f };
    7.附檔名要看到才行
    8.在week08_model專案中ADD 剛剛同目錄的glm.cpp
 (以上步驟做完會出現一顆黃色足球😭😭😭)
+講解各種模型，可以自己改，在把專案saveproject存檔放到GitHub裡
 ```
                    
   
