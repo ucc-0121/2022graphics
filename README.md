@@ -1107,9 +1107,6 @@ const GLfloat high_shininess[] = { 100.0f };
 ## 0-1 
 ```
      至https://jsyeh.org/3dcg10 下載3個檔案
-```
-## 0-2 
-```
      windows.zip =解壓=> 下載\windows\Texture.exe
      data.zip =解壓=>下載\windows\data\圖檔.org
      source.zip
