@@ -1181,7 +1181,8 @@ void myTexture()
     glutMainLoop();
  }  
 ```
-## 實作演練(,,Ծ‸Ծ,, )```C
+## 實作演練(,,Ծ‸Ծ,, )
+```C
 從老師那偷取程式碼
 https://gist.github.com/jsyeh/5ed01210559721ec71b659b3ffed2dd7
 複製前段的程式碼後貼在剛剛的專案裡
