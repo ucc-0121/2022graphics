@@ -1120,6 +1120,28 @@ const GLfloat high_shininess[] = { 100.0f };
 1-2 下載後, 安裝有一個特別重要的事:
       不要改目錄 C:\OpenCV2.1等一下設定才會方便
 ```
-
-
+## Step2.寫Opencv 可以讀圖和秀圖
+```C
+2-1 安裝完後要重開CODEBLOCKS因為PATH會改變
+2-2 file-NewFile-存成week09_opencv.cpp
+#include <opencv/highgui.h>
+int main()
+{
+    IplImage*img=cvLoadImage("檔名.jpg");
+    cvShowImage("weel09",img);
+    cvWaitKey(0);
+}
+```
+```
+2-3 開始設定 (ఠ్ఠ ˓̭ ఠ్ఠ)
+2-3-1 設定很困難: Setting-compiler 設定 Include 目錄
+2-3-2 設定很困難: Setting-compiler 設定 Lib 目錄
+2-3-3 設定很困難: Setting-compiler 設定 Linker 加入
+          cv210,  cxcore210, highgui210
+2-4 Seach diretories目錄在哪呢(◔ д◔)?
+      compiler 的 Include 目錄 C:\opencv2.1\include
+                               C:\opencv2.1\lib
+成功設置完後就可以跑程式囉~
+DOREMESO~٩(●ᴗ●)۶
+```
   
