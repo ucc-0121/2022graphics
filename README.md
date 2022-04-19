@@ -1102,5 +1102,27 @@ const GLfloat high_shininess[] = { 100.0f };
 (以上步驟做完會出現一顆黃色足球😭😭😭)
 講解各種模型，可以自己改，在把專案saveproject存檔放到GitHub裡
 ```
-                   
+# WEEK09貼圖座標
+## Step0. 重複上上週的步驟
+## 0-1 
+```
+     至https://jsyeh.org/3dcg10 下載3個檔案
+```
+## 0-2 
+```
+     windows.zip =解壓=> 下載\windows\Texture.exe
+     data.zip =解壓=>下載\windows\data\圖檔.org
+     source.zip
+     開啟Texture.exe(今日的主角)
+
+>>左邊的鉤和叉是頂點 右邊的是貼圖座標<<
+```
+## Step1.下載OpenCV
+```
+1-1 open cv 2.1.0 win32 vs2008(最小，安裝最快，可以跨平台，簡單)
+1-2 下載後, 安裝有一個特別重要的事:
+      不要改目錄 C:\OpenCV2.1等一下設定才會方便
+```
+
+
   
