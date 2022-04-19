@@ -1144,4 +1144,40 @@ int main()
 成功設置完後就可以跑程式囉~
 DOREMESO~٩(●ᴗ●)۶
 ```
-  
+## Step3 結合opencv和opengl
+```
+3-1 程式碼用剪貼的
+3-2 非常複雜        非常簡單
+3-3 最簡單的整合:把10行GLUT範例(黃色茶壺那個)+3~5行的opencv讀圖秀圖
+3-4 file-new-project,Glut專案 week09_texture
+3-5 寫出10行
+3-6 加入我們的程式
+```
+```C
+#include <GL/glut.h>
+#include <opencv/highgui.h>
+void myTexture()
+{
+    IplImage*img=cvLoadImage("earth.jpg");
+    cvShowImage("opencv",img);
+    //cvWaitKey(0);
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,0);
+    glutSolidTeapot(0.3);
+
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutCreateWindow("week09Texture");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+    myTexture();
+    glutMainLoop();
+ }  
+```
