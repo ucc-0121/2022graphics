@@ -1100,6 +1100,136 @@ const GLfloat high_shininess[] = { 100.0f };
    7.附檔名要看到才行
    8.在week08_model專案中ADD 剛剛同目錄的glm.cpp
 (以上步驟做完會出現一顆黃色足球😭😭😭)
+講解各種模型，可以自己改，在把專案saveproject存檔放到GitHub裡
 ```
-                   
-  
+# WEEK09貼圖座標
+## Step0. 重複上上週的步驟
+## 0-1 
+```
+     至https://jsyeh.org/3dcg10 下載3個檔案
+     windows.zip =解壓=> 下載\windows\Texture.exe
+     data.zip =解壓=>下載\windows\data\圖檔.org
+     source.zip
+     開啟Texture.exe(今日的主角)
+
+>>左邊的鉤和叉是頂點 右邊的是貼圖座標<<
+```
+## Step1.下載OpenCV
+```
+1-1 open cv 2.1.0 win32 vs2008(最小，安裝最快，可以跨平台，簡單)
+1-2 下載後, 安裝有一個特別重要的事:
+      不要改目錄 C:\OpenCV2.1等一下設定才會方便
+```
+## Step2.寫Opencv 可以讀圖和秀圖
+```C
+2-1 安裝完後要重開CODEBLOCKS因為PATH會改變
+2-2 file-NewFile-存成week09_opencv.cpp
+#include <opencv/highgui.h>
+int main()
+{
+    IplImage*img=cvLoadImage("檔名.jpg");
+    cvShowImage("weel09",img);
+    cvWaitKey(0);
+}
+```
+```
+2-3 開始設定 (ఠ్ఠ ˓̭ ఠ్ఠ)
+2-3-1 設定很困難: Setting-compiler 設定 Include 目錄
+2-3-2 設定很困難: Setting-compiler 設定 Lib 目錄
+2-3-3 設定很困難: Setting-compiler 設定 Linker 加入
+          cv210,  cxcore210, highgui210
+2-4 Seach diretories目錄在哪呢(◔ д◔)?
+      compiler 的 Include 目錄 C:\opencv2.1\include
+                               C:\opencv2.1\lib
+成功設置完後就可以跑程式囉~
+DOREMESO~٩(●ᴗ●)۶
+```
+## Step3 結合opencv和opengl
+```
+3-1 程式碼用剪貼的
+3-2 非常複雜        非常簡單
+3-3 最簡單的整合:把10行GLUT範例(黃色茶壺那個)+3~5行的opencv讀圖秀圖
+3-4 file-new-project,Glut專案 week09_texture
+3-5 寫出10行
+3-6 加入我們的程式
+```
+```C
+#include <GL/glut.h>
+#include <opencv/highgui.h>
+void myTexture()
+{
+    IplImage*img=cvLoadImage("earth.jpg");
+    cvShowImage("opencv",img);
+    //cvWaitKey(0);
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,0);
+    glutSolidTeapot(0.3);
+
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutCreateWindow("week09Texture");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+    myTexture();
+    glutMainLoop();
+ }  
+```
+## 實作演練(,,Ծ‸Ծ,, )
+```C
+從老師那偷取程式碼
+https://gist.github.com/jsyeh/5ed01210559721ec71b659b3ffed2dd7
+複製前段的程式碼後貼在剛剛的專案裡
+BUILD後就好啦~~~
+```
+```C
+#include <GL/glut.h>
+#include <opencv/highgui.h>
+#include <opencv/cv.h>
+#include <GL/glut.h>
+int myTexture(char * filename)
+{
+    IplImage * img = cvLoadImage(filename); ///OpenCV讀圖
+    cvCvtColor(img,img, CV_BGR2RGB); ///OpenCV轉色彩 (需要cv.h)
+    glEnable(GL_TEXTURE_2D); ///1. 開啟貼圖功能
+    GLuint id; ///準備一個 unsigned int 整數, 叫 貼圖ID
+    glGenTextures(1, &id); /// 產生Generate 貼圖ID
+    glBindTexture(GL_TEXTURE_2D, id); ///綁定bind 貼圖ID
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); /// 貼圖參數, 超過包裝的範圖T, 就重覆貼圖
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); /// 貼圖參數, 超過包裝的範圖S, 就重覆貼圖
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); /// 貼圖參數, 放大時的內插, 用最近點
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); /// 貼圖參數, 縮小時的內插, 用最近點
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img->width, img->height, 0, GL_RGB, GL_UNSIGNED_BYTE, img->imageData);
+    return id;
+}
+void myTexture()
+{
+    IplImage*img=cvLoadImage("earth.jpg");
+    cvShowImage("opencv",img);
+    //cvWaitKey(0);
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glutSolidTeapot(0.3);
+
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutCreateWindow("week09Texture");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+    myTexture("earth.jpg");
+    glutMainLoop();
+ }
+
+```
