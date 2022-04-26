@@ -1361,3 +1361,19 @@ int myTexture(char * filename)
  }
 
 ```
+## Step04 轉把轉吧七彩霓虹燈
+```C
+在display函式裡加入些許程式碼
+void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix();
+        glRotatef(angle,0,0,1);
+        gluQuadricTexture(sphere,1);
+        gluSphere(sphere,1,30,30);
+    glPopMatrix();
+
+    glutSwapBuffers();
+    angle+=0.01;///每執行一次DISPLAY加一度
+ }
+ ```
