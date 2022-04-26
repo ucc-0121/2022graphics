@@ -1377,3 +1377,9 @@ void display()
     angle+=0.01;///每執行一次DISPLAY加一度
  }
  ```
+## 實作時間 (ᗒᗣᗕ)՞
+```C
+再加入修改一些程式碼讓他正轉&&看起來式3D的!
+        glRotatef(90,1,0,0);///正轉，對X軸旋轉
+        glEnable(GL_DEPTH_TEST);///3D跑圖
+```
