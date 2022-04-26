@@ -1233,3 +1233,42 @@ void myTexture()
  }
 
 ```
+### week10
+```
+1. 討論: 期中考成績、快篩(缺貨、APP、價錢、Seven)、覺得好累
+2. 主題: 上週貼圖+貼到四邊形=背景圖
+3. 主題: 上週貼圖+貼到圓球=會轉的地球
+4. 主題: 上週貼圖+貼到模型=鋼彈模型
+```
+## Step0貼圖
+```
+0-1 安裝freeglut (libglut32.a要有),opencv2.1(Add path)
+0-2 File-New-project-GLUT專案week10_texture_background
+0-3 把上週Blog裡的Mytexture複製過來
+0-4 把上上周的10行GLUT程式碼貼過來
+```
+```C
+#include <GL/glut.h>
+#include <opencv/highgui.h>
+void myTexture()
+{
+  IplImage*img=cvLoadImage("earth.jpg");
+  cvShowImage("opencv",img);
+  //cvWaitKey(0);
+}
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glutSolidTeapot(0.3);
+    glutSwapBuffers();
+}
+    int main(int argc, char *argv[])//main()主函式 進階版
+{
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutCreateWindow("week09Texture");//開GLUT視窗
+    glutDisplayFunc(display);//顯示用的函式
+    myTexture("earth.jpg");
+    glutMainLoop();
+ }  
+```
