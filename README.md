@@ -1304,4 +1304,6 @@ DOREMESO~٩(●ᴗ●)۶
 glBegin(GL_POLYGON);
     glTexCoord2f(tx,ty); glVertex2f(x,y);//要有四次，前面是貼圖座標,後面是4個頂點
 glEnd();
+<加在display裡>
 ```
+
