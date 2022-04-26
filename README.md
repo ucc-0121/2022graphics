@@ -1312,9 +1312,9 @@ glEnd();
 3-2 Q:圓球怎麼畫?A:圓球的3D座標和2D的貼圖座標要用cos(),sin()算出來
 3-3 GLUquadric * sphere = NULL;//指標,指到2次曲面
 3-4 在main()sphere=gluNewQuadric();//準備好2次曲面
-gluSphere(一個指標,R半徑,slices,stacks)
-gluSphere(sphere     ,    1     ,  30   ,   30   )
--OpenGL(GL)的函式 ex.glVertex2f()
--OpenGL Utillies(GLU)的函式 ex.gluSphere()
--OpenGL User Toolkit(GLUT)的函式 ex.glutSolidTeapot
+gluSphere(一個指標,R半徑,slices,stacks);
+gluSphere(sphere     ,    1     ,  30   ,   30   );
+-OpenGL(GL)的函式 ex.glVertex2f();
+-OpenGL Utillies(GLU)的函式 ex.gluSphere();
+-OpenGL User Toolkit(GLUT)的函式 ex.glutSolidTeapot();
 ```
