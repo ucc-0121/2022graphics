@@ -1297,3 +1297,11 @@ int myTexture(char * filename)
 成功設置完後就可以跑程式囉~
 DOREMESO~٩(●ᴗ●)۶
 ```
+## Step02 
+```C
+接下來我們利用期中考考的glBegin(GL_POLYGON)開始畫及glEnd()結束畫，
+中間夾4行glTexCoord2f(tx,ty)及glVertex2f(x,y)來把背景貼圖做出來
+glBegin(GL_POLYGON);
+    glTexCoord2f(tx,ty); glVertex2f(x,y);//要有四次，前面是貼圖座標,後面是4個頂點
+glEnd();
+```
