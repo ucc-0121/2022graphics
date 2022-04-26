@@ -1383,3 +1383,15 @@ void display()
         glRotatef(90,1,0,0);///正轉，對X軸旋轉
         glEnable(GL_DEPTH_TEST);///3D跑圖
 ```
+## Step05 主題: 上週貼圖+貼到模型=鋼彈模型
+```
+5-1 至https://jsyeh.org/3dcg10 下載3個檔案
+windows.zip =解壓
+data.zip =解壓
+source.zip
+5-2 下載老師買的鋼彈模型
+5-3 File-New-Project-GLUT專案 week10_texture_model
+5-4 在C:\Users\YUXUAN\Desktop\freeglut\bin 放入鋼彈的模型DATA
+5-5 把source裡的glm.h 和glm.cpp放在專案目錄裡,main.cpp的旁邊
+```
+
