@@ -1285,3 +1285,15 @@ int myTexture(char * filename)
  }  
  }  
 ```
+## Step1 OPENCV設定
+```
+1-1 開始設定 (ఠ్ఠ ˓̭ ఠ్ఠ)
+1-2 設定很困難: Setting-compiler 設定 Include (目錄C:\opencv2.1\include)
+1-3 設定很困難: Setting-compiler 設定 Lib (目錄C:\opencv2.1\lib)
+1-4 設定很困難: Setting-compiler 設定 Linker 加入
+          cv210,  cxcore210, highgui210
+1-5 Seach diretories目錄在哪呢(◔ д◔)?
+我的位置:C:\Users\YUXUAN\Desktop\freeglut\bin(圖片也要放在這裡喔!)
+成功設置完後就可以跑程式囉~
+DOREMESO~٩(●ᴗ●)۶
+```
