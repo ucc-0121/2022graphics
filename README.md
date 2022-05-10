@@ -1678,4 +1678,50 @@ glPushMatrix();
     myDrawObject(1);///畫手臂
 glPopMatrix();
 ```
+## Step02-1 再剛剛的網頁加新功能，讓手臂揮手身體不動
+```
+1.點glTranslatef()變紅色後，就可以移動左邊黑色框框裡手臂位置
+2.把另一個glTranslatef()放在glrotatef()的下面、手臂的上面
+3.把另一個glTranslatef()放在glrotatef()的上面
+```
+## 透過下面程式碼可以發現，手臂很神奇的長在肚臍的地方且旋轉
+```C
+glPushMatrix();
+    myDrawObject(0);///畫身體
+    glRotatef(angle,0,0,1);//這個旋轉會轉下面整個東西
+    glTranslatef(-0.25,-0.18,0);//往左下方移動(讓軸心放世界的中心)
+    myDrawObject(1);///畫手臂(右上方)
+glPopMatrix();
+```
 
+## 把上面的T擺好，掛到身體的右上角
+```C
+myDrawObject(0);///畫身體
+glPushMatrix();
+    glTranslatef(0.24,0.28,0);//往右上方移動(掛在身體右上方)
+    glRotatef(angle,0,0,1);//這個旋轉會轉下面整個東西
+    glTranslatef(-0.3,-0.19,0);//往左下方移動(讓軸心放世界的中心)
+    myDrawObject(1);///畫手臂(右上方)
+glPopMatrix();
+```
+
+## Step02-2 老師在講解下禮拜考試題目(類似這種)
+```
+glPushMatrix();
+    glTranslatef(0.29,0.31,0);//往右上方移動(掛在身體右上方)
+    glRotatef(angle,0,0,1);//這個旋轉會轉下面整個東西
+    glTranslatef(-0.3,-0.19,0);//往左下方移動(讓軸心放世界的中心)
+    myDrawObject(1);///畫手臂(右上方)
+glPopMatrix();
+```
+
+## Step02-3實作時間ಥ⌣ಥ(從今天和之前的筆記剪貼)
+```
+1.File-New-Project-GLUT專案,week12_TRT
+2.把10行程式碼放上去//之前的筆記
+3.把TRT的六行程式碼放上去//今天的筆記
+4.在讓她自己旋轉 float angle=0;配上
+5.再配上glRotatef(angle, 0,0,1);
+6.再angle++;//因為電腦跑比較快所以我用+=0.01
+7.glutIdleFunc(display);//上週筆記
+```
