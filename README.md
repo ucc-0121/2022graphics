@@ -1630,3 +1630,52 @@ angle+=0.01;
     glutMainLoop();
  }
 ```
+ 
+
+# Week12
+```
+電腦圖學 Week12 2022-05-10
+1. 主題: T-R-T (移動、旋輚、移動)對特定軸轉動
+2. 作業: T-R-T 
+3. 下週考試: T-R-T 對特定軸轉動
+```
+## step01-1 課本範例 看Transfromation.exe的變化
+```
+1.至https://jsyeh.org/3dcg10下載 data.zip windows.zip
+2.windows.zip =解壓=> 下載\windows\Transfromation.exe
+3.data.zip =解壓=>下載\windows\data\模型
+4.重點在: 有T移動、有R轉動，按右鍵Swap交換T R
+5.glTranslatef( 0.9 , 0.0 , 0.0 );移動
+6.glrotatef(角度,0,1,0);旋轉
+```
+## 在右邊轉動的藍色車子
+```C
+glTranslatef( 0.9 , 0.0 , 0.0 );移動在右邊
+glrotatef(角度,0,1,0);旋轉
+畫一台藍色的車子
+```
+
+## 繞著中間轉彎的車子
+```C
+glrotatef(角度,0,1,0);旋轉
+glTranslatef( 0.9 , 0.0 , 0.0 );移動在右邊
+```
+
+
+## step01-2 用另一程式來理解: OpenGL T-R-T函式: 對特定軸轉動練習
+```
+1.120.125.80.50/GL (小心! 不安全,繼續)期中考、小考題
+2.(右下角)點ToDraw, 右邊黑色可以畫圖
+3.Ctrl-R Reload可以清空
+4.可以畫個身體 叫 MyDrawObject(0)
+5.可以畫個手臂 叫 MyDrawObject(1)
+6.可以改程式碼的順序
+7.可以按 angle= 再按空白鍵 會自動改變成動畫
+```
+```C
+glPushMatrix();
+    glRotatef(angle,0,0,1)
+    myDrawObject(1);///畫手臂
+glPopMatrix();
+```
+
