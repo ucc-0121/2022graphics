@@ -1630,3 +1630,187 @@ angle+=0.01;
     glutMainLoop();
  }
 ```
+ 
+
+# Week12
+```
+電腦圖學 Week12 2022-05-10
+1. 主題: T-R-T (移動、旋輚、移動)對特定軸轉動
+2. 作業: T-R-T 
+3. 下週考試: T-R-T 對特定軸轉動
+```
+## step01-1 課本範例 看Transfromation.exe的變化
+```
+1.至https://jsyeh.org/3dcg10下載 data.zip windows.zip
+2.windows.zip =解壓=> 下載\windows\Transfromation.exe
+3.data.zip =解壓=>下載\windows\data\模型
+4.重點在: 有T移動、有R轉動，按右鍵Swap交換T R
+5.glTranslatef( 0.9 , 0.0 , 0.0 );移動
+6.glrotatef(角度,0,1,0);旋轉
+```
+## 在右邊轉動的藍色車子
+```C
+glTranslatef( 0.9 , 0.0 , 0.0 );移動在右邊
+glrotatef(角度,0,1,0);旋轉
+畫一台藍色的車子
+```
+
+## 繞著中間轉彎的車子
+```C
+glrotatef(角度,0,1,0);旋轉
+glTranslatef( 0.9 , 0.0 , 0.0 );移動在右邊
+```
+
+
+## step01-2 用另一程式來理解: OpenGL T-R-T函式: 對特定軸轉動練習
+```
+1.120.125.80.50/GL (小心! 不安全,繼續)期中考、小考題
+2.(右下角)點ToDraw, 右邊黑色可以畫圖
+3.Ctrl-R Reload可以清空
+4.可以畫個身體 叫 MyDrawObject(0)
+5.可以畫個手臂 叫 MyDrawObject(1)
+6.可以改程式碼的順序
+7.可以按 angle= 再按空白鍵 會自動改變成動畫
+```
+```C
+glPushMatrix();
+    glRotatef(angle,0,0,1)
+    myDrawObject(1);///畫手臂
+glPopMatrix();
+```
+## Step02-1 再剛剛的網頁加新功能，讓手臂揮手身體不動
+```
+1.點glTranslatef()變紅色後，就可以移動左邊黑色框框裡手臂位置
+2.把另一個glTranslatef()放在glrotatef()的下面、手臂的上面
+3.把另一個glTranslatef()放在glrotatef()的上面
+```
+## 透過下面程式碼可以發現，手臂很神奇的長在肚臍的地方且旋轉
+```C
+glPushMatrix();
+    myDrawObject(0);///畫身體
+    glRotatef(angle,0,0,1);//這個旋轉會轉下面整個東西
+    glTranslatef(-0.25,-0.18,0);//往左下方移動(讓軸心放世界的中心)
+    myDrawObject(1);///畫手臂(右上方)
+glPopMatrix();
+```
+
+## 把上面的T擺好，掛到身體的右上角
+```C
+myDrawObject(0);///畫身體
+glPushMatrix();
+    glTranslatef(0.24,0.28,0);//往右上方移動(掛在身體右上方)
+    glRotatef(angle,0,0,1);//這個旋轉會轉下面整個東西
+    glTranslatef(-0.3,-0.19,0);//往左下方移動(讓軸心放世界的中心)
+    myDrawObject(1);///畫手臂(右上方)
+glPopMatrix();
+```
+
+## Step02-2 老師在講解下禮拜考試題目(類似這種)
+```
+glPushMatrix();
+    glTranslatef(0.29,0.31,0);//往右上方移動(掛在身體右上方)
+    glRotatef(angle,0,0,1);//這個旋轉會轉下面整個東西
+    glTranslatef(-0.3,-0.19,0);//往左下方移動(讓軸心放世界的中心)
+    myDrawObject(1);///畫手臂(右上方)
+glPopMatrix();
+```
+
+## Step02-3實作時間ಥ⌣ಥ(從今天和之前的筆記剪貼)
+```
+1.File-New-Project-GLUT專案,week12_TRT
+2.把10行程式碼放上去//之前的筆記
+3.把TRT的六行程式碼放上去//今天的筆記
+4.在讓她自己旋轉 float angle=0;配上
+5.再配上glRotatef(angle, 0,0,1);
+6.再angle++;//因為電腦跑比較快所以我用+=0.01
+7.glutIdleFunc(display);//上週筆記
+```
+## Step03-1 做出茶壺超人(?有白色的身體,有紅色的手臂,利用TRT讓手臂再任意軸轉動
+```C
+#include <GL/glut.h>
+float angle=0;
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);
+    glutSolidTeapot(0.3);
+     glPushMatrix();
+        glTranslatef(0.2,0,0);///(3)掛到右邊(整個往動)
+        glRotatef(angle, 0,0,1);///(2)旋轉
+        glTranslatef(0.2,0,0);
+        glColor3f(1,0,0);
+        glutSolidTeapot(0.2);///小茶壺，當作小手臂
+    glPopMatrix();
+    glutSwapBuffers();
+    angle+=0.01; ///每次執行 display() 加1度
+}
+int main(int argc,char**argv)
+{
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+    glutCreateWindow("week12 TRT");
+
+    glutIdleFunc(display);
+    glutDisplayFunc(display);
+    glutMainLoop();
+}
+```
+## Step03-2 用來寫回家作業(手臂手軸絕對不能斷!)
+```
+1.要有3D模型(要有身體，上手臂，下手軸)
+2.要用TRT做出來
+3.做出來左右兩邊的手臂手肘
+4.左手臂手肘可以透過複製右邊的手臂手肘後加上負號
+```
+```C
+#include <GL/glut.h>
+float angle=0;
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);
+    glutSolidTeapot(0.3);///茶壺當身體
+
+     glPushMatrix();///右邊的手臂手肘
+        glTranslatef(0.2,0,0);///(3)掛到右邊(整個往動)
+        glRotatef(angle, 0,0,1);///(2)旋轉
+        glTranslatef(0.2,0,0);
+        glColor3f(1,0,0);
+        glutSolidTeapot(0.2);///小茶壺，當作小手臂
+        glPushMatrix();
+            glTranslatef(0.2,0,0);///(3)掛到右邊(整個往動)
+            glRotatef(angle, 0,0,1);///(2)旋轉
+            glTranslatef(0.2,0,0);
+            glColor3f(1,0,0);
+            glutSolidTeapot(0.2);///小茶壺，當作小手肘
+        glPopMatrix();
+    glPopMatrix();
+
+    glPushMatrix();///左邊的手臂手肘
+        glTranslatef(-0.2,0,0);///(3)掛到左邊(整個往動)
+        glRotatef(-angle, 0,0,1);///(2)旋轉
+        glTranslatef(-0.2,0,0);
+        glColor3f(1,0,0);
+        glutSolidTeapot(0.2);///小茶壺，當作小手臂
+        glPushMatrix();
+            glTranslatef(-0.2,0,0);///(3)掛到左邊(整個往動)
+            glRotatef(-angle, 0,0,1);///(2)旋轉
+            glTranslatef(-0.2,0,0);
+            glColor3f(1,0,0);
+            glutSolidTeapot(0.2);///小茶壺，當作小手肘
+        glPopMatrix();
+    glPopMatrix();
+    glutSwapBuffers();
+    angle+=0.01; ///每次執行 display() 加1度
+}
+int main(int argc,char**argv)
+{
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+    glutCreateWindow("week12_TRT");
+
+    glutIdleFunc(display);
+    glutDisplayFunc(display);
+    glutMainLoop();
+}
+```
