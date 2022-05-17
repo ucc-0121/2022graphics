@@ -2198,3 +2198,40 @@ void motion(int x,int y)
  }
 
 ```
+## step03-2 如果只有一個角度，就不會有其他變化
+```C
+1.要有多少角度呢?? =>每個關節要分別有兩個軸向=>總共20個
+   =>float angle=0改成float angle[20](全部的角度都要改)
+2.多關節用keyboard 切換
+```
+## 加入哪些程式碼
+### 透過鍵盤的輸入控制要用滑鼠改變的關節
+```C
+float angle[20],oldX=0;
+int angleID=0;
+void keyboard(unsigned char key,int x,int y)
+{
+    if(key=='0') angleID=0;
+    if(key=='1') angleID=1;
+    if(key=='2') angleID=2;
+    if(key=='3') angleID=3;
+}
+
+```
+## 調整角度的地方
+```C
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle[angleID]+=(x-oldX);
+    oldX=x;
+    glutPostRedisplay();///請GLUT重劃畫面
+}
+```
+## 宣告的地方(在main裡加上)
+```C
+glutKeyboardFunc(keyboard);
+```
