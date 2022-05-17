@@ -2132,7 +2132,7 @@ void motion(int x,int y)
 ```
 ## 雙手臂
 ```C
-///week13_rect_TRT_TRT
+///week13_rect_many_TRT
 #include <GL/glut.h>
 float angle=0,oldX=0;
 void mouse(int button,int state,int x,int y)
