@@ -30,3 +30,20 @@
 	<opencv/cv.h>
 	"glm.h"
 
+924330300 source:c:\users\yuxuan\desktop\2022graphics\week11_gundam\glm.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"glm.h"
+
+924330300 c:\users\yuxuan\desktop\2022graphics\week11_gundam\glm.h
+	<GL/glut.h>
+
+1651546325 source:c:\users\yuxuan\desktop\2022graphics\week11_gundam\main.cpp
+	<GL/glut.h>
+	<opencv/highgui.h>
+	<opencv/cv.h>
+	"glm.h"
+
