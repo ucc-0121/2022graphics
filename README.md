@@ -1819,3 +1819,131 @@ int main(int argc,char**argv)
     glutMainLoop();
 }
 ```
+ ## 電腦圖學 Week13 2022-05-17
+```
+1. 示範複習作業/考試的 TRT(實際例子)
+2. TRT 的R角度
+3. 利用 keyboard/mouse 來改變
+4. 如何轉正模型、如何調整模型大小
+```
+## step01-1 glRectf(x1,y1,x2,y2)方塊
+```
+1.File-new-Project專案-week13_rect_TRT
+2.貼上GLUT的10行程式碼,不用茶壺
+```
+## 正方形的程式碼
+```C
+#include <GL/glut.h>
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glRectf(0.3,0.5,-0.3,-0.5);
+
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+
+```
+
+##step01-2 把手加上去而且可以旋轉!
+```
+1.另一個小方塊，且加上色彩
+2.準備好TRT程式碼
+```
+## 加上小手臂
+```C
+#include <GL/glut.h>
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+    glPushMatrix();
+        ///glTranslatef(x,y,z);///把手臂掛在身上
+        ///glRotatef(angle,0,0,1);///對z軸旋轉
+        ///glTranslatef(x2,y2,z2);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+```
+
+## step01-3 把旋轉中心放在正中心
+## 移動小手臂
+```C
+1.把(0.3,0.4)移到(0,0)=>glTranslatef(-0.3,-0.4,0);
+```
+
+## 轉動45度角
+```C
+加上
+float angle=45;
+glRotatef(angle,0,0,1);
+可以旋轉45度~
+```
+
+## 把手移回原處
+```C
+glTranslatef(0.3,0.4,0);
+```
+
+
+## 調整步驟(目前結果)
+```
+1. 先調整最下面的Translate改變中心點
+2.改變Rotate數值改變旋轉角度
+3.最後調整最上面的Translate將手臂位置移回原處
+```
+```C
+#include <GL/glut.h>
+float angle=45;
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+    glPushMatrix();
+        glTranslatef(0.3,0.4,0);///把手臂掛在身上
+        glRotatef(angle,0,0,1);///對z軸旋轉
+        glTranslatef(-0.3,-0.4,0);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    ///glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+
+```
+
