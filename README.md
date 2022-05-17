@@ -2128,7 +2128,7 @@ void motion(int x,int y)
 1.File-New-Project-GLUT專案-week13_rect_many_TRT
 2.複製剛剛的程式碼
 3.在把剛剛右半部手臂手肘複製貼上
-4.透過鏡射原理改變x值(變到左邊去)
+4.透過鏡射原理改變x值(正負值顛倒)=>(變到左邊去)
 ```
 ## 雙手臂
 ```C
