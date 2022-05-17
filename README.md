@@ -80,6 +80,11 @@ git commit -m "add week01"
 4.5要 git push上雲端!
 PS. Chrome記得再登入哦~
 
+4.6 git pull是把雲端拉下來到你的硬碟倉庫
+4.6.1 start . 可以開啟現在的目錄 就可以複製貼上你的程式
+4.6.2 再重複git status 那段
+
+再重新git pus
 成功上傳><
 ```
 ```
@@ -1813,4 +1818,420 @@ int main(int argc,char**argv)
     glutDisplayFunc(display);
     glutMainLoop();
 }
+```
+ ## 電腦圖學 Week13 2022-05-17
+```
+1. 示範複習作業/考試的 TRT(實際例子)
+2. TRT 的R角度
+3. 利用 keyboard/mouse 來改變
+4. 如何轉正模型、如何調整模型大小
+```
+## step01-1 glRectf(x1,y1,x2,y2)方塊
+```
+1.File-new-Project專案-week13_rect_TRT
+2.貼上GLUT的10行程式碼,不用茶壺
+```
+## 正方形的程式碼
+```C
+#include <GL/glut.h>
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glRectf(0.3,0.5,-0.3,-0.5);
+
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+
+```
+
+## step01-2 把手加上去而且可以旋轉!
+```
+1.另一個小方塊，且加上色彩
+2.準備好TRT程式碼
+```
+## 加上小手臂
+```C
+#include <GL/glut.h>
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+    glPushMatrix();
+        ///glTranslatef(x,y,z);///把手臂掛在身上
+        ///glRotatef(angle,0,0,1);///對z軸旋轉
+        ///glTranslatef(x2,y2,z2);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+```
+
+## step01-3 把旋轉中心放在正中心
+## 移動小手臂
+```C
+1.把(0.3,0.4)移到(0,0)=>glTranslatef(-0.3,-0.4,0);
+```
+
+## 轉動45度角
+```C
+加上
+float angle=45;
+glRotatef(angle,0,0,1);
+可以旋轉45度~
+```
+
+## 把手移回原處
+```C
+glTranslatef(0.3,0.4,0);
+```
+
+
+## 調整步驟(目前結果)
+```
+1. 先調整最下面的Translate改變中心點
+2.改變Rotate數值改變旋轉角度
+3.最後調整最上面的Translate將手臂位置移回原處
+```
+```C
+#include <GL/glut.h>
+float angle=45;
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+    glPushMatrix();
+        glTranslatef(0.3,0.4,0);///把手臂掛在身上
+        glRotatef(angle,0,0,1);///對z軸旋轉
+        glTranslatef(-0.3,-0.4,0);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    ///glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+
+```
+## step02-1 裡用Mouse motion來改變手臂的旋轉角度
+```C
+1.為了能使用滑鼠控制加上Mouse和Motion
+2.用glutPostRedisplay();來重新畫出視窗
+3.最後加上 glutMouseFunc(mouse);
+                    glutMotionFunc(motion);來函式呼叫
+```
+## 目前程式碼
+```C
+#include <GL/glut.h>
+float angle=45,oldX=0;
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle+=(x-oldX);
+    oldX=x;
+    glutPostRedisplay();///請GLUT重劃畫面
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+    glPushMatrix();
+        glTranslatef(0.3,0.4,0);///把手臂掛在身上
+        glRotatef(angle,0,0,1);///對z軸旋轉
+        glTranslatef(-0.3,-0.4,0);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    ///glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+```
+
+##  step02-2 要開新專案 week13_rect_TRT_TRT做出更多關節
+```
+1.File-New-Project-GLUT專案-week13_rect_TRT_TRT
+2.把前面程式拿來用
+3.要新增的地方是第二個手臂的關節
+```
+## 第二個手臂關節的部分~
+```C
+///week13_rect_TRT_TRT
+#include <GL/glut.h>
+float angle=0,oldX=0;
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle+=(x-oldX);
+    oldX=x;
+    glutPostRedisplay();///請GLUT重劃畫面
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+    glPushMatrix();
+        glTranslatef(0.3,0.4,0);///把手臂掛在身上
+        glRotatef(angle,0,0,1);///對z軸旋轉
+        glTranslatef(-0.3,-0.4,0);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);///上手臂
+
+        glPushMatrix();
+            ///glTranslatef(0.3,0.4,0);///把手臂掛在身上
+            ///glRotatef(angle,0,0,1);///對z軸旋轉
+            ////glTranslatef(-0.3,-0.4,0);///挑整手臂的旋轉中心
+            glColor3f(0,1,0);
+            glRectf(0.7,0.5,1.0,0.3);///下手肘
+        glPopMatrix();
+
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    ///glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+
+```
+
+## 把手肘掛在肚臍
+```C
+1.把第21行註解
+2.執行程式可以發現只有綠色手臂在旋轉
+glPushMatrix();
+            ///glTranslatef(0.3,0.4,0);///把手臂掛在身上
+            glRotatef(angle,0,0,1);///對z軸旋轉
+            glTranslatef(-0.7,-0.4,0);///挑整手臂的旋轉中心
+            glColor3f(0,1,0);
+            glRectf(0.7,0.5,1.0,0.3);///下手肘
+glPopMatrix();
+```
+## 掛回原處
+```
+1.將數值改成glTranslatef(0.7,0.4,0);///把手臂掛在身上
+2.把剛剛註解的部分取消
+3.可以看到手臂和手肘成功連接一起旋轉
+```
+```C
+///week13_rect_TRT_TRT
+#include <GL/glut.h>
+float angle=0,oldX=0;
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle+=(x-oldX);
+    oldX=x;
+    glutPostRedisplay();///請GLUT重劃畫面
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+    glPushMatrix();
+        glTranslatef(0.3,0.4,0);///把手臂掛在身上
+        glRotatef(angle,0,0,1);///對z軸旋轉
+        glTranslatef(-0.3,-0.4,0);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);///上手臂
+
+        glPushMatrix();
+            glTranslatef(0.7,0.4,0);///把手臂掛在身上
+            glRotatef(angle,0,0,1);///對z軸旋轉
+            glTranslatef(-0.7,-0.4,0);///挑整手臂的旋轉中心
+            glColor3f(0,1,0);
+            glRectf(0.7,0.5,1.0,0.3);///下手肘
+        glPopMatrix();
+
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    ///glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+
+```
+## step03-1 複製出左半部分手臂手肘
+```
+1.File-New-Project-GLUT專案-week13_rect_many_TRT
+2.複製剛剛的程式碼
+3.在把剛剛右半部手臂手肘複製貼上
+4.透過鏡射原理改變x值(正負值顛倒)=>(變到左邊去)
+```
+## 雙手臂
+```C
+///week13_rect_many_TRT
+#include <GL/glut.h>
+float angle=0,oldX=0;
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle+=(x-oldX);
+    oldX=x;
+    glutPostRedisplay();///請GLUT重劃畫面
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);///白色
+    glRectf(0.3,0.5,-0.3,-0.5);///身體
+
+    glPushMatrix();///右半部
+        glTranslatef(0.3,0.4,0);///把手臂掛在身上
+        glRotatef(angle,0,0,1);///對z軸旋轉
+        glTranslatef(-0.3,-0.4,0);///挑整手臂的旋轉中心
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);///上手臂
+
+        glPushMatrix();
+            glTranslatef(0.7,0.4,0);///把手臂掛在身上
+            glRotatef(angle,0,0,1);///對z軸旋轉
+            glTranslatef(-0.7,-0.4,0);///挑整手臂的旋轉中心
+            glColor3f(0,1,0);
+            glRectf(0.7,0.5,1.0,0.3);///下手肘
+        glPopMatrix();
+    glPopMatrix();
+
+        glPushMatrix();///左半部
+            glTranslatef(-0.3,0.4,0);///把手臂掛在身上
+            glRotatef(angle,0,0,1);///對z軸旋轉
+            glTranslatef(0.3,-0.4,0);///挑整手臂的旋轉中心
+            glColor3f(1,0,0);
+            glRectf(-0.3,0.5,-0.7,0.3);///左上手臂
+
+            glPushMatrix();
+                glTranslatef(-0.7,0.4,0);///把手臂掛在身上
+                glRotatef(angle,0,0,1);///對z軸旋轉
+                glTranslatef(0.7,-0.4,0);///挑整手臂的旋轉中心
+                glColor3f(0,1,0);
+                glRectf(-0.7,0.5,-1.0,0.3);///左下手肘
+            glPopMatrix();
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    ///glutInitWindowSize(600,600);
+    glutCreateWindow("week13_rect_TRT");//開GLUT視窗
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+
+```
+## step03-2 如果只有一個角度，就不會有其他變化
+```C
+1.要有多少角度呢?? =>每個關節要分別有兩個軸向=>總共20個
+   =>float angle=0改成float angle[20](全部的角度都要改)
+2.多關節用keyboard 切換
+```
+## 加入哪些程式碼
+### 透過鍵盤的輸入控制要用滑鼠改變的關節
+```C
+float angle[20],oldX=0;
+int angleID=0;
+void keyboard(unsigned char key,int x,int y)
+{
+    if(key=='0') angleID=0;
+    if(key=='1') angleID=1;
+    if(key=='2') angleID=2;
+    if(key=='3') angleID=3;
+}
+
+```
+## 調整角度的地方
+```C
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle[angleID]+=(x-oldX);
+    oldX=x;
+    glutPostRedisplay();///請GLUT重劃畫面
+}
+```
+## 宣告的地方(在main裡加上)
+```C
+glutKeyboardFunc(keyboard);
 ```
