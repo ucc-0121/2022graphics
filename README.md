@@ -2357,5 +2357,14 @@ void keyboard(unsigned char key,int x,int y)
     if(key=='3') angleID=3;
 }
 ```
+## step02-2 為啥我們產生的檔案file.txt放在很神奇的地方ㄋ?
+>> C:\Users\YUXUAN\Desktop\freeglut\bin 目標放在程式專案的目錄
+```
+0.為甚麼呢?
+1.原來是電腦餘讀 GLUT專案需要freeglut.dll 所以工作目錄才會跑到freeglut/bin裡
+2.在 .cbp codeblocks project檔裡,有工作目錄的設定 工作執行的目錄
+3.使用notepad++ 開啟.cbp檔 將 裡面的working dir裡改成<Option working_dir="." />
+4.notepad++檔案存檔後,codeblock檔案reload 後就完成
+5.小心歷史餘毒!!=>將原freeglut/bin裡的freeglut.dll複製貼上到程式專案的資料夾中
 
 
