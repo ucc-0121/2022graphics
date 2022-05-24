@@ -2309,9 +2309,53 @@ void motion(int x,int y)
     oldX=x;
     glutPostRedisplay();
 }
-
-
 ```
+## step 02-1 做動畫囉~
+```
+0.File-New-Project-GLUT專案->week14_angles_fprintf_fscanf
+1.copy前一個版本的程式進行修改
+2.要寫void myRead()
+3.在keyboard()裡 按下'r' 可以呼叫 myRead()
+>>這裡R要一直按著!!!只是因為鍵盤的關西，重播會跑很慢
+>>fout 那的printf和fprintf裡的跳行要記得空格，不然會發生錯誤!!
+```
+```C
+///week14_angles_fprintf
+#include <GL/glut.h>
+#include <stdio.h>
+float angle[20],oldX=0;
+int angleID=0;
+FILE * fout=NULL, * fin = NULL;
+void myWrite()
+{///每呼叫一次myWrite
+    if(fout == NULL)fout=fopen("file.txt","w+");
 
+    for(int i = 0;i<20;i++)
+    {
+        printf("%.1f ",angle[i]);///小黑印出來
+        fprintf(fout,"%.1f ",angle[i]);///檔案印出來
+    }///這裡老師沒有fclose
+    printf("\n");///小黑印出跳行
+    fprintf(fout,"\n");///檔案跳行
+}
+void myRead()
+{
+    if(fout!=NULL){fclose(fout); fout=NULL;}
+    if(fin==NULL) fin=fopen("file.txt","r");
+    for(int i=0;i<20;i++)
+    {
+        fscanf(fin,"%f",&angle[i]);
+    }
+    glutPostRedisplay();///重劃畫面
+}
+void keyboard(unsigned char key,int x,int y)
+{
+    if(key=='r') myRead();
+    if(key=='0') angleID=0;
+    if(key=='1') angleID=1;
+    if(key=='2') angleID=2;
+    if(key=='3') angleID=3;
+}
+```
 
 
