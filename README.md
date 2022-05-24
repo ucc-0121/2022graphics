@@ -80,7 +80,7 @@ git commit -m "add week01"
 4.5要 git push上雲端!
 PS. Chrome記得再登入哦~
 
-4.6 git pull是把雲端拉下來到你的硬碟倉庫
+4.6 git pull是把雲端拉下來到你的硬碟倉庫(先PULL再)
 4.6.1 start . 可以開啟現在的目錄 就可以複製貼上你的程式
 4.6.2 再重複git status 那段
 
