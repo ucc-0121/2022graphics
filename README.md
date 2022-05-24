@@ -2366,5 +2366,39 @@ void keyboard(unsigned char key,int x,int y)
 3.使用notepad++ 開啟.cbp檔 將 裡面的working dir裡改成<Option working_dir="." />
 4.notepad++檔案存檔後,codeblock檔案reload 後就完成
 5.小心歷史餘毒!!=>將原freeglut/bin裡的freeglut.dll複製貼上到程式專案的資料夾中
+```
+## step03-1 glutTimerFunc() 計時器
+```
+0.為甚麼要這個? 因為每個人鍵盤輸入速度步一樣
+0-1.File-New-Project-GLUT專案->week14_timer
+1.void timer(int t)寫入timer函式
+2.glutTimerFunc(等多久,timer,t參數);
+3.其他就是GLUT的10行程式碼
+```
+```C
+///week14_timer
+#include <GL/glut.h>
+#include <stdio.h>
+void timer(int t){
+    printf("起床,現在時間: %d\n",t);
+}
+void display()
+{
+}
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week14_timer");
 
+    glutTimerFunc(1000,timer,1);
+    glutTimerFunc(2000,timer,2);
+    glutTimerFunc(3000,timer,3);
+    glutTimerFunc(4000,timer,4);
+    glutTimerFunc(5000,timer,5);
+    glutDisplayFunc(display);
+    glutMainLoop();
+ }
+
+```
 
