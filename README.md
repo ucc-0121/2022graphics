@@ -2273,7 +2273,7 @@ glutKeyboardFunc(keyboard);
 3.                             fprintf(fout,"%.1f",angle[i]);///檔案印出來
 4.以上是存檔和讀檔                                
 ```
-目前程式碼
+目前加上的程式碼
 ```
 ///week14_angles_fprintf
 #include <GL/glut.h>
@@ -2309,56 +2309,7 @@ void motion(int x,int y)
     oldX=x;
     glutPostRedisplay();
 }
- void display()
- {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glColor3f(1,1,1);
-    glRectf(0.3,0.5,-0.3,-0.5);
 
-    glPushMatrix();
-        glTranslatef(0.3,0.4,0);
-        glRotatef(angle[0],0,0,1);
-        glTranslatef(-0.3,-0.4,0);
-        glColor3f(1,0,0);
-        glRectf(0.3,0.5,0.7,0.3);
-        glPushMatrix();
-            glTranslatef(0.7,0.4,0);
-            glRotatef(angle[1],0,0,1);
-            glTranslatef(-0.7,-0.4,0);
-            glColor3f(0,1,0);
-            glRectf(0.7,0.5,1.0,0.3);
-        glPopMatrix();
-    glPopMatrix();
-
-        glPushMatrix();
-            glTranslatef(-0.3,0.4,0);
-            glRotatef(angle[2],0,0,1);
-            glTranslatef(0.3,-0.4,0);
-            glColor3f(1,0,0);
-            glRectf(-0.3,0.5,-0.7,0.3);
-
-            glPushMatrix();
-                glTranslatef(-0.7,0.4,0);
-                glRotatef(angle[3],0,0,1);
-                glTranslatef(0.7,-0.4,0);
-                glColor3f(0,1,0);
-                glRectf(-0.7,0.5,-1.0,0.3);
-            glPopMatrix();
-    glPopMatrix();
-    glutSwapBuffers();
- }
- int main(int argc, char *argv[])
- {
-    glutInit(&argc,argv);
-    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
-    glutCreateWindow("week13_rect_TRT");
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
-    glutKeyboardFunc(keyboard);
-    glutDisplayFunc(display);
-
-    glutMainLoop();
- }
 
 ```
 
