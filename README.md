@@ -2235,3 +2235,44 @@ void motion(int x,int y)
 ```C
 glutKeyboardFunc(keyboard);
 ```
+#  Week14
+```
+電腦圖學 Week14 2022-05-24
+1. 寫檔、讀檔
+2. 關節、做動畫
+3. 計時器 glutTimerFunc(時間, timer, 參數t)
+4. 播放聲音
+```
+## step01-1寫檔 File Output (紀錄)
+```C
+0.File-New-Empty File-存檔到week14-1_fprintf目錄裡的week14-1.cpp
+1.fopen() 開啟檔案
+2.printf()   =>  fprintf()
+3.fclose(fout) 關閉檔案
+```
+
+## step01-2 讀檔 File Input
+## 貼心小提醒d(`･∀･)b
+```
+在做scanf()時,讀檔的位置要記得加個&才能讀到檔呦
+```
+```C
+0.File-New-Empty File-存檔到week14-2_fprintf_fscanf 目錄裡的 week14-2.cpp
+1.把剛剛的week14-1拿來用
+2.另外一組 FILE * fin = fopen("檔名","r");
+3.scanf ()   =>    fscanf()
+4.fclose(fin)
+```
+
+
+## step01-3 把上週的week13_rect_many_TRT 拿來改
+```C
+0. File-New-Project-GLUT專案->week14_angles_fprintf
+1.貼上上週的最後程式
+2.新增些許程式碼 printf("%.1f",angle[i]);///小黑印出來
+3.                             fprintf(fout,"%.1f",angle[i]);///檔案印出來
+4.以上是存檔和讀檔                                
+```
+
+
+
