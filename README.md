@@ -2235,3 +2235,231 @@ void motion(int x,int y)
 ```C
 glutKeyboardFunc(keyboard);
 ```
+#  Week14
+```
+電腦圖學 Week14 2022-05-24
+1. 寫檔、讀檔
+2. 關節、做動畫
+3. 計時器 glutTimerFunc(時間, timer, 參數t)
+4. 播放聲音
+```
+## step01-1寫檔 File Output (紀錄)
+```C
+0.File-New-Empty File-存檔到week14-1_fprintf目錄裡的week14-1.cpp
+1.fopen() 開啟檔案
+2.printf()   =>  fprintf()
+3.fclose(fout) 關閉檔案
+```
+
+## step01-2 讀檔 File Input
+## 貼心小提醒d(`･∀･)b
+```
+在做scanf()時,讀檔的位置要記得加個&才能讀到檔呦
+```
+```C
+0.File-New-Empty File-存檔到week14-2_fprintf_fscanf 目錄裡的 week14-2.cpp
+1.把剛剛的week14-1拿來用
+2.另外一組 FILE * fin = fopen("檔名","r");
+3.scanf ()   =>    fscanf()
+4.fclose(fin)
+```
+
+
+## step01-3 把上週的week13_rect_many_TRT 拿來改
+```C
+0. File-New-Project-GLUT專案->week14_angles_fprintf
+1.貼上上週的最後程式
+2.新增些許程式碼 printf("%.1f",angle[i]);///小黑印出來
+3.                             fprintf(fout,"%.1f",angle[i]);///檔案印出來
+4.以上是存檔和讀檔                                
+```
+目前加上的程式碼
+```
+///week14_angles_fprintf
+#include <GL/glut.h>
+#include <stdio.h>
+float angle[20],oldX=0;
+int angleID=0;
+FILE * fout=NULL;
+void myWrite()
+{
+    if(fout == NULL)fout=fopen("file.txt","w+");
+
+    for(int i = 0;i<20;i++)
+    {
+        printf("%.1f",angle[i]);///小黑印出來
+        fprintf(fout,"%.1f",angle[i]);///檔案印出來
+    }///這裡老師沒有fclose
+}
+void keyboard(unsigned char key,int x,int y)
+{
+    if(key=='0') angleID=0;
+    if(key=='1') angleID=1;
+    if(key=='2') angleID=2;
+    if(key=='3') angleID=3;
+}
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle[angleID]+=(x-oldX);
+    myWrite();
+    oldX=x;
+    glutPostRedisplay();
+}
+```
+## step 02-1 做動畫囉~
+```
+0.File-New-Project-GLUT專案->week14_angles_fprintf_fscanf
+1.copy前一個版本的程式進行修改
+2.要寫void myRead()
+3.在keyboard()裡 按下'r' 可以呼叫 myRead()
+>>這裡R要一直按著!!!只是因為鍵盤的關西，重播會跑很慢
+>>fout 那的printf和fprintf裡的跳行要記得空格，不然會發生錯誤!!
+```
+```C
+///week14_angles_fprintf
+#include <GL/glut.h>
+#include <stdio.h>
+float angle[20],oldX=0;
+int angleID=0;
+FILE * fout=NULL, * fin = NULL;
+void myWrite()
+{///每呼叫一次myWrite
+    if(fout == NULL)fout=fopen("file.txt","w+");
+
+    for(int i = 0;i<20;i++)
+    {
+        printf("%.1f ",angle[i]);///小黑印出來
+        fprintf(fout,"%.1f ",angle[i]);///檔案印出來
+    }///這裡老師沒有fclose
+    printf("\n");///小黑印出跳行
+    fprintf(fout,"\n");///檔案跳行
+}
+void myRead()
+{
+    if(fout!=NULL){fclose(fout); fout=NULL;}
+    if(fin==NULL) fin=fopen("file.txt","r");
+    for(int i=0;i<20;i++)
+    {
+        fscanf(fin,"%f",&angle[i]);
+    }
+    glutPostRedisplay();///重劃畫面
+}
+void keyboard(unsigned char key,int x,int y)
+{
+    if(key=='r') myRead();
+    if(key=='0') angleID=0;
+    if(key=='1') angleID=1;
+    if(key=='2') angleID=2;
+    if(key=='3') angleID=3;
+}
+```
+## step02-2 為啥我們產生的檔案file.txt放在很神奇的地方ㄋ?
+>> C:\Users\YUXUAN\Desktop\freeglut\bin 目標放在程式專案的目錄
+```
+0.為甚麼呢?
+1.原來是電腦餘讀 GLUT專案需要freeglut.dll 所以工作目錄才會跑到freeglut/bin裡
+2.在 .cbp codeblocks project檔裡,有工作目錄的設定 工作執行的目錄
+3.使用notepad++ 開啟.cbp檔 將 裡面的working dir裡改成<Option working_dir="." />
+4.notepad++檔案存檔後,codeblock檔案reload 後就完成
+5.小心歷史餘毒!!=>將原freeglut/bin裡的freeglut.dll複製貼上到程式專案的資料夾中
+```
+## step03-1 glutTimerFunc() 計時器
+```
+0.為甚麼要這個? 因為每個人鍵盤輸入速度步一樣
+0-1.File-New-Project-GLUT專案->week14_timer
+1.void timer(int t)寫入timer函式
+2.glutTimerFunc(等多久,timer,t參數);
+3.其他就是GLUT的10行程式碼
+```
+```C
+///week14_timer
+#include <GL/glut.h>
+#include <stdio.h>
+void timer(int t){
+    printf("起床,現在時間: %d\n",t);
+}
+void display()
+{
+}
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week14_timer");
+
+    glutTimerFunc(1000,timer,1);
+    glutTimerFunc(2000,timer,2);
+    glutTimerFunc(3000,timer,3);
+    glutTimerFunc(4000,timer,4);
+    glutTimerFunc(5000,timer,5);
+    glutDisplayFunc(display);
+    glutMainLoop();
+ }
+
+```
+## step03-2 期末作業30秒要30格,900個timer有點麻煩,程式應該自動一點
+```
+1.透過函式呼叫函式
+2.glutTimerFunc(1000,timer,t+1); 隨著時間每秒+1
+3. glutTimerFunc(5000,timer,0);///設定:5秒後,才叫第0個timer
+```
+```C
+///week14_timer
+#include <GL/glut.h>
+#include <stdio.h>
+void timer(int t){
+    printf("起床,現在時間: %d\n",t);
+    glutTimerFunc(1000,timer,t+1);
+}
+void display()
+{
+}
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week14_timer");
+
+    glutTimerFunc(5000,timer,0);///設定:5秒後,才叫第0個timer
+
+    glutDisplayFunc(display);
+    glutMainLoop();
+ }
+```
+## step03-3 播放聲音PlaySound() 下載do.wav
+```
+1.繼續改 剛剛那隻程式(week14_timer_auto)
+2.#include <mmsytem.h>
+3.PlaySound("do.wav",NULL,SND_ASYNC);
+```
+## 有聲音的程式碼(*´∀`)~♥
+```C
+///week14_timer
+#include <GL/glut.h>
+#include <stdio.h>
+#include <mmsystem.h>
+void timer(int t){
+    printf("我起床囉!  %d\n",t);
+    PlaySound("do.wav",NULL,SND_ASYNC);
+    glutTimerFunc(2000,timer,t+1);
+}
+void display()
+{
+}
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week14_timer");
+
+    glutTimerFunc(5000,timer,0);///設定:5秒後,才叫第0個timer
+
+    glutDisplayFunc(display);
+    glutMainLoop();
+ }
+
+```
