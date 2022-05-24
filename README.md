@@ -2401,4 +2401,65 @@ void display()
  }
 
 ```
+## step03-2 期末作業30秒要30格,900個timer有點麻煩,程式應該自動一點
+```
+1.透過函式呼叫函式
+2.glutTimerFunc(1000,timer,t+1); 隨著時間每秒+1
+3. glutTimerFunc(5000,timer,0);///設定:5秒後,才叫第0個timer
+```
+```C
+///week14_timer
+#include <GL/glut.h>
+#include <stdio.h>
+void timer(int t){
+    printf("起床,現在時間: %d\n",t);
+    glutTimerFunc(1000,timer,t+1);
+}
+void display()
+{
+}
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week14_timer");
 
+    glutTimerFunc(5000,timer,0);///設定:5秒後,才叫第0個timer
+
+    glutDisplayFunc(display);
+    glutMainLoop();
+ }
+```
+## step03-3 播放聲音PlaySound() 下載do.wav
+```
+1.繼續改 剛剛那隻程式(week14_timer_auto)
+2.#include <mmsytem.h>
+3.PlaySound("do.wav",NULL,SND_ASYNC);
+```
+## 有聲音的程式碼(*´∀`)~♥
+```C
+///week14_timer
+#include <GL/glut.h>
+#include <stdio.h>
+#include <mmsystem.h>
+void timer(int t){
+    printf("我起床囉!  %d\n",t);
+    PlaySound("do.wav",NULL,SND_ASYNC);
+    glutTimerFunc(2000,timer,t+1);
+}
+void display()
+{
+}
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week14_timer");
+
+    glutTimerFunc(5000,timer,0);///設定:5秒後,才叫第0個timer
+
+    glutDisplayFunc(display);
+    glutMainLoop();
+ }
+
+```
