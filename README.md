@@ -2508,7 +2508,7 @@ int main()
 ```
 ## Step02-1 MP3(小/有壓縮) vs WAV(大/原始檔)
 >>PlaySound()只能撥最原始的檔案,只要一行
->>MP3比較麻煩,需要打比較多行
+>>,MP3比較麻煩,需要打比較多行
 ```C
 1.在Moodle下載CMP3_MCI.h
 2.程式碼#include<CMP3_MCI.h>
