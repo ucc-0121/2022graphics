@@ -2516,3 +2516,15 @@ int main()
 4.mp3.Load("檔名.mp3");
 5.mp3.play();
 ```
+## Step02-2 接續上周的week14_angles_TRT_write_and_read
+```C
+0.File-New-Project-GLUT專案,week15_angles_TRT_again
+1.複製上週程式碼,並試跑看看能否正確執行
+2.發現問題: 不像動畫,只會動一個關節，而且很慢
+3.myWrite()會寫一行,myRead()會讀一行
+4.不能把myWrite()放在motion()
+5.把動作對應的關節全部做好再存起來成一個動作
+6.擺好動作按下's'存檔
+7.執行時可以存入幾個動作'r'可讀入
+8.事後在工作目錄裡(C:\Users\YUXUAN\Desktop\freeglut\bin)有file.txt可以大量copy動作，重新跑完程式動作就變多了
+```
