@@ -2463,3 +2463,22 @@ void display()
  }
 
 ```
+# Week15
+## 電腦圖學 Week15 2022-05-31
+```
+1. 播聲音、播MP3
+2. 播放動畫、內插
+3. 機器人擺動作、跳舞
+```
+## Step01-1 PlaySound()解釋
+```C
+0.File-New-Empty File-week15_playsound.cpp
+1.上週#include<mmsystem.h>
+2.這週使用#include<windows.h>
+3.上週playsound("檔名.wav",NULL,SND_ASYNC);//不等待,不同步
+4.這週PlaySound("檔名.wav",NULL,SND_SYNC);//等待,同步
+5.setting-compiler setting-linker加入winmm(可以撥聲音)
+
+6.注意工作目錄的位置!
+7.將下載下來的聲音檔放在你檔案存放的位置(記得音樂檔是wav檔)
+```
