@@ -2482,3 +2482,37 @@ void display()
 6.注意工作目錄的位置!
 7.將下載下來的聲音檔放在你檔案存放的位置(記得音樂檔是wav檔)
 ```
+## Step01-2 PlaySound()更多參數
+```C
+0.File-New-Empty File-week15-2_SND_SYNC_SND_ASYNC
+1.PlaySound("檔名.wav",NULL,SND_SYNC);=>加上變ASYNC就會不播音樂直接結束
+```
+
+## 做一些變更
+```C
+#include <windows.h>
+#include <stdio.h>
+int main()
+{///不等待會快速執行下一行，互動性佳
+    PlaySound("07013033.wav",NULL,SND_ASYNC);///背景會先撥放此段音樂
+    while(1){
+        printf("請輸入數字: ");///邊秀出文字
+        int n;
+        scanf("%d",&n);
+        if(n==1)PlaySound("do.wav",NULL,SND_ASYNC);///ASYNC不等待
+        if(n==2)PlaySound("re.wav",NULL,SND_ASYNC);
+        if(n==3)PlaySound("mi.wav",NULL,SND_ASYNC);
+    }
+}
+
+```
+## Step02-1 MP3(小/有壓縮) vs WAV(大/原始檔)
+>>PlaySound()只能撥最原始的檔案,只要一行
+>>MP3比較麻煩,需要打比較多行
+```C
+1.在Moodle下載CMP3_MCI.h
+2.程式碼#include<CMP3_MCI.h>
+3.宣告 CMP3_MCI mp3
+4.mp3.Load("檔名.mp3");
+5.mp3.play();
+```
