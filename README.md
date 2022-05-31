@@ -2528,3 +2528,37 @@ int main()
 7.執行時可以存入幾個動作'r'可讀入
 8.事後在工作目錄裡(C:\Users\YUXUAN\Desktop\freeglut\bin)有file.txt可以大量copy動作，重新跑完程式動作就變多了
 ```
+## Step03-1 讓他搖擺(*´ω`)人(´ω`*)
+```C
+1.需要 3D Model (glm.h/.cpp) (.obj .mtl .jpg.....)
+2.需要把模型切很多塊(因為整塊的話關節不會動)
+3.TRT的程式才會轉動
+4.keyboard()切換關節,mouse motion()旋轉關節
+```
+## 慢慢做
+```C
+1.File-new-project,GLUT專案,week15_hw4
+2.改善電腦餘毒=>開啟notepad++將工作目錄改成<Option working_dir="." />
+3.將freeglut.dll複製貼上到程式所在的檔案夾
+4.把glm.h glm.cpp和gundam的data目錄,全放在現在要用的檔案目錄
+```
+## 實作小tips
+```
+1.為了不要打太多行程式碼進行縮減
+2.建立一個類似於檔案夾的東西
+GLMmodel * myReadone(char * filename)
+{
+    if(one==NULL)
+    {
+        one=glmReadOBJ("data/body.obj");
+        glmUnitize(one);
+        glmFacetNormals(one);
+        glmVertexNormals(one,90);
+    }
+    return one;
+}
+3.這樣每次要從裡面抓檔案時只要打一行程式碼就好
+ex.if (body==NULL) body=myReadOne("data/body.obj");
+    glmDraw(body,GLM_TEXTURE|GLM_SMOOTH);
+4.再去調整關節的TRT
+```
