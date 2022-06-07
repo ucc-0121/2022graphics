@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1653965806 source:c:\users\yuxuan\desktop\week15_angles_trt_again\main.cpp
+1654569604 source:c:\users\yuxuan\desktop\week16_interpolation\main.cpp
 	<GL/glut.h>
 	<stdio.h>
 
@@ -16,8 +16,4 @@
 	<GL/gl.h>
 	<GL/glu.h>
 	<stdlib.h>
-
-1653965806 source:c:\users\yuxuan\desktop\2022graphics\week15_angles_trt_again\main.cpp
-	<GL/glut.h>
-	<stdio.h>
 

@@ -1,7 +1,6 @@
 # depslib dependency file v1.0
-1653965806 source:c:\users\yuxuan\desktop\week15_angles_trt_again\main.cpp
+1654574181 source:c:\users\yuxuan\desktop\week16_camera_projection_glutlookat\main.cpp
 	<GL/glut.h>
-	<stdio.h>
 
 1426320928 c:\users\yuxuan\desktop\freeglut\include\gl\glut.h
 	"freeglut_std.h"
@@ -16,8 +15,4 @@
 	<GL/gl.h>
 	<GL/glu.h>
 	<stdlib.h>
-
-1653965806 source:c:\users\yuxuan\desktop\2022graphics\week15_angles_trt_again\main.cpp
-	<GL/glut.h>
-	<stdio.h>
 

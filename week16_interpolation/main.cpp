@@ -1,4 +1,5 @@
 ///week15修改自week14_angles_fprintf
+///week16_interpolation
 #include <GL/glut.h>
 #include <stdio.h>
 float angle[20],oldX=0;
@@ -16,18 +17,43 @@ void myWrite()
     printf("\n");///小黑印出跳行
     fprintf(fout,"\n");///檔案跳行
 }
+float NewAngle[20],OldAngle[20];
 void myRead()
 {
     if(fout!=NULL){fclose(fout); fout=NULL;}
     if(fin==NULL) fin=fopen("file.txt","r");
     for(int i=0;i<20;i++)
     {
-        fscanf(fin,"%f",&angle[i]);
+        OldAngle[i]=NewAngle[i];///原來新的變舊
+        fscanf(fin,"%f",&NewAngle[i]);///得到新角度
+        ///fscanf(fin,"%f",&angle[i]);
     }
     glutPostRedisplay();///重劃畫面
 }
+void myInterpolate(float alpha)
+{
+    for(int i=0;i<20;i++)
+    {
+        angle[i]=alpha*NewAngle[i]+(1-alpha)*OldAngle[i];
+    }
+}
+void timer (int t)
+{  if(t%50==0) myRead();
+    myInterpolate((t%50)/50.0);
+    glutPostRedisplay();
+    glutTimerFunc(20,timer,t+1);
+}
+///int t=0;
 void keyboard(unsigned char key,int x,int y)
 {
+    if(key=='p'){///play
+            myRead();
+            glutTimerFunc(0,timer,0);
+        ///if(t%30==0) myRead();///介於0.0~1.0
+        ///myInterpolate((t%30)/30.0);
+        ///glutPostRedisplay();
+        ///t++;
+    }
     if(key=='s') myWrite();///調好動作才save存檔
     if(key=='r') myRead();
     if(key=='0') angleID=0;
@@ -58,15 +84,15 @@ void motion(int x,int y)
         glTranslatef(-0.3,-0.4,0);
         glColor3f(1,0,0);
         glRectf(0.3,0.5,0.7,0.3);
-      /*  glPushMatrix();
+        glPushMatrix();
             glTranslatef(0.7,0.4,0);
             glRotatef(angle[1],0,0,1);
             glTranslatef(-0.7,-0.4,0);
             glColor3f(0,1,0);
             glRectf(0.7,0.5,1.0,0.3);
-        glPopMatrix();*/
+        glPopMatrix();
     glPopMatrix();
-/*
+
         glPushMatrix();
             glTranslatef(-0.3,0.4,0);
             glRotatef(angle[2],0,0,1);
@@ -81,14 +107,14 @@ void motion(int x,int y)
                 glColor3f(0,1,0);
                 glRectf(-0.7,0.5,-1.0,0.3);
             glPopMatrix();
-    glPopMatrix();*/
+    glPopMatrix();
     glutSwapBuffers();
  }
  int main(int argc, char *argv[])
  {
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
-    glutCreateWindow("week15_angles_TRT_again");
+    glutCreateWindow("week16_interpolation");
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
     glutKeyboardFunc(keyboard);

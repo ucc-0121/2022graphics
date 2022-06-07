@@ -47,7 +47,7 @@ float angle=0;///旋轉角度
     glEnable(GL_DEPTH_TEST);
     glutDisplayFunc(display);///顯示用的函式
     glutIdleFunc(display);
-    myTexture("data/Diffuse.jpg");
+    ///myTexture("data/Diffuse.jpg");
     ///myTexture("earth.jpg");
     ///sphere=gluNewQuadric();///準備好2次曲面
     glutMainLoop();
