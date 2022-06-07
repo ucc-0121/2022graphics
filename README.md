@@ -2562,3 +2562,248 @@ ex.if (body==NULL) body=myReadOne("data/body.obj");
     glmDraw(body,GLM_TEXTURE|GLM_SMOOTH);
 4.再去調整關節的TRT
 ```
+# Week16
+ ## 電腦圖學 Week16 2022-06-07
+```
+1. 主題: 內插、動作內插
+2. 主題: 攝影機、運鏡 
+3. 實作: gluLookAt()
+```
+## step01-1 Alpha內插公式    =>   alpha: 0.0~1.0
+>>> angle=alpha*新+(1-alpha)*舊
+```
+ex.
+-  alpha:0  =>  舊
+-  alpha:0.5  =>半新半就
+-  alpha:1  =>新
+可以使用Excel or Google Spreadsheet 來做
+```
+
+## step01-2 用程式試試看(●´ω｀●)ゞ
+>>> 使用上週 week15_angles_TRT_again 改動
+```C
+1.File-New-Project-GLUT專案-week16_interpolation 內插
+2.複製程式=>執行=>mouse motion改動作,按s存檔一行關節動作*4次
+3.按r之後發現動作不連續
+```
+## 改造程式碼
+```C
+1.void myInterpolate(float alpha)
+2.一樣按s儲存每個動作
+3.按下p可以逐步計算內插,做新舊角度交換
+    if(key=='p'){///play
+            if(t%30==0) myRead();///介於0.0~1.0
+            myInterpolate((t%30)/30.0);
+            glutPostRedisplay();
+            t++;
+        }
+=>>動畫變得更順👍👍
+```
+
+## step02-1 讓動畫跑得更順(將myInterpolate在timer裡呼叫)
+```
+1.透過上一節課的程式碼進行修改
+2.將原本的一直按著p改成按一次p可以自動重複撥放
+3.timer計時器可以設定幾秒撥一次動畫
+4.%50的原因是因為這樣計算下來每1秒會跑一格動畫
+```
+## 目前程式碼
+```C
+///week15修改自week14_angles_fprintf
+///week16_interpolation
+#include <GL/glut.h>
+#include <stdio.h>
+float angle[20],oldX=0;
+int angleID=0;
+FILE * fout=NULL, * fin = NULL;
+void myWrite()
+{///每呼叫一次myWrite
+    if(fout == NULL)fout=fopen("file.txt","w+");
+
+    for(int i = 0;i<20;i++)
+    {
+        printf("%.1f ",angle[i]);///小黑印出來
+        fprintf(fout,"%.1f ",angle[i]);///檔案印出來
+    }///這裡老師沒有fclose
+    printf("\n");///小黑印出跳行
+    fprintf(fout,"\n");///檔案跳行
+}
+float NewAngle[20],OldAngle[20];
+void myRead()
+{
+    if(fout!=NULL){fclose(fout); fout=NULL;}
+    if(fin==NULL) fin=fopen("file.txt","r");
+    for(int i=0;i<20;i++)
+    {
+        OldAngle[i]=NewAngle[i];///原來新的變舊
+        fscanf(fin,"%f",&NewAngle[i]);///得到新角度
+        ///fscanf(fin,"%f",&angle[i]);
+    }
+    glutPostRedisplay();///重劃畫面
+}
+void myInterpolate(float alpha)
+{
+    for(int i=0;i<20;i++)
+    {
+        angle[i]=alpha*NewAngle[i]+(1-alpha)*OldAngle[i];
+    }
+}
+void timer (int t)
+{  if(t%50==0) myRead();
+    myInterpolate((t%50)/50.0);
+    glutPostRedisplay();
+    glutTimerFunc(20,timer,t+1);
+}
+///int t=0;
+void keyboard(unsigned char key,int x,int y)
+{
+    if(key=='p'){///play
+            myRead();
+            glutTimerFunc(0,timer,0);
+        ///if(t%30==0) myRead();///介於0.0~1.0
+        ///myInterpolate((t%30)/30.0);
+        ///glutPostRedisplay();
+        ///t++;
+    }
+    if(key=='s') myWrite();///調好動作才save存檔
+    if(key=='r') myRead();
+    if(key=='0') angleID=0;
+    if(key=='1') angleID=1;
+    if(key=='2') angleID=2;
+    if(key=='3') angleID=3;
+}
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle[angleID]+=(x-oldX);
+    ///myWrite();
+    oldX=x;
+    glutPostRedisplay();
+}
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,1);
+    glRectf(0.3,0.5,-0.3,-0.5);
+
+    glPushMatrix();
+        glTranslatef(0.3,0.4,0);
+        glRotatef(angle[0],0,0,1);
+        glTranslatef(-0.3,-0.4,0);
+        glColor3f(1,0,0);
+        glRectf(0.3,0.5,0.7,0.3);
+        glPushMatrix();
+            glTranslatef(0.7,0.4,0);
+            glRotatef(angle[1],0,0,1);
+            glTranslatef(-0.7,-0.4,0);
+            glColor3f(0,1,0);
+            glRectf(0.7,0.5,1.0,0.3);
+        glPopMatrix();
+    glPopMatrix();
+
+        glPushMatrix();
+            glTranslatef(-0.3,0.4,0);
+            glRotatef(angle[2],0,0,1);
+            glTranslatef(0.3,-0.4,0);
+            glColor3f(1,0,0);
+            glRectf(-0.3,0.5,-0.7,0.3);
+
+            glPushMatrix();
+                glTranslatef(-0.7,0.4,0);
+                glRotatef(angle[3],0,0,1);
+                glTranslatef(0.7,-0.4,0);
+                glColor3f(0,1,0);
+                glRectf(-0.7,0.5,-1.0,0.3);
+            glPopMatrix();
+    glPopMatrix();
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])
+ {
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+    glutCreateWindow("week16_interpolation");
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
+    glutKeyboardFunc(keyboard);
+    glutDisplayFunc(display);
+
+    glutMainLoop();
+ }
+
+```
+
+## Step02-2 運鏡
+```
+eye=>位置
+center=>位置
+up=>向量(攝影機指向的地方)
+謝謝老師熱情的代入教學
+>>>想看可至https://2022graphicsa.blogspot.com/search/label/09160455_%E9%BB%83%E6%A6%86%E8%90%B1
+```
+##  Step03-1 保持長寬比
+>>> 不會變形
+```
+1.File-New-Project-GLUT專案-week16_camera_projection_GlutLookat
+2.備份177行範例,透過那段程式進行修改
+3.aspect ratio 長寬比(左寬右高) ex.1920x1080 1280x720 640x480,16:9,4:3....
+```
+
+
+## 在做一些改動
+```
+1.新增void motion函式
+2.原本視角固定在0,0,3的位置=>(x-150)/150.0,(y-150)/150.0,3, ///eye
+   (透過滑鼠的滑動做出視窗的轉變)
+```
+## 現在程式碼
+```C
+#include <GL/glut.h>
+void reshape(int w,int h){///不能 整數除
+    float ar = (float) w/(float) h;
+    glViewport(0,0,w,h);
+    glMatrixMode(GL_PROJECTION);///3D變2D
+    glLoadIdentity();
+    gluPerspective(60,ar,0.1,100);
+
+    glMatrixMode(GL_MODELVIEW);///3D Model+view
+    glLoadIdentity();
+    gluLookAt(0,0,3, ///eye
+              0,0,0, ///center看哪裡
+              0,1,0);///up向量
+}
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glutSolidTeapot(1);
+    glutSwapBuffers();
+}
+void motion(int x,int y)
+{
+    glMatrixMode(GL_MODELVIEW);///3D Model+view
+    glLoadIdentity();
+    gluLookAt((x-150)/150.0,(y-150)/150.0,3, ///eye
+              0,0,0, ///center看哪裡
+              0,1,0);///up向量
+    glutPostRedisplay();///重劃畫面
+}
+int main(int argc, char *argv[])
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+    glutCreateWindow("week16 camera");
+    glutDisplayFunc(display);
+    glutMotionFunc(motion);
+    glutReshapeFunc(reshape);///範例是resize
+    glutMainLoop();
+
+}
+
+```
+
+
+
+
