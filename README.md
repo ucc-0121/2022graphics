@@ -2744,5 +2744,66 @@ up=>向量(攝影機指向的地方)
 謝謝老師熱情的代入教學
 >>>想看可至https://2022graphicsa.blogspot.com/search/label/09160455_%E9%BB%83%E6%A6%86%E8%90%B1
 ```
+##  Step03-1 保持長寬比
+>>> 不會變形
+```
+1.File-New-Project-GLUT專案-week16_camera_projection_GlutLookat
+2.備份177行範例,透過那段程式進行修改
+3.aspect ratio 長寬比(左寬右高) ex.1920x1080 1280x720 640x480,16:9,4:3....
+```
+
+
+## 在做一些改動
+```
+1.新增void motion函式
+2.原本視角固定在0,0,3的位置=>(x-150)/150.0,(y-150)/150.0,3, ///eye
+   (透過滑鼠的滑動做出視窗的轉變)
+```
+## 現在程式碼
+```C
+#include <GL/glut.h>
+void reshape(int w,int h){///不能 整數除
+    float ar = (float) w/(float) h;
+    glViewport(0,0,w,h);
+    glMatrixMode(GL_PROJECTION);///3D變2D
+    glLoadIdentity();
+    gluPerspective(60,ar,0.1,100);
+
+    glMatrixMode(GL_MODELVIEW);///3D Model+view
+    glLoadIdentity();
+    gluLookAt(0,0,3, ///eye
+              0,0,0, ///center看哪裡
+              0,1,0);///up向量
+}
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glutSolidTeapot(1);
+    glutSwapBuffers();
+}
+void motion(int x,int y)
+{
+    glMatrixMode(GL_MODELVIEW);///3D Model+view
+    glLoadIdentity();
+    gluLookAt((x-150)/150.0,(y-150)/150.0,3, ///eye
+              0,0,0, ///center看哪裡
+              0,1,0);///up向量
+    glutPostRedisplay();///重劃畫面
+}
+int main(int argc, char *argv[])
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+    glutCreateWindow("week16 camera");
+    glutDisplayFunc(display);
+    glutMotionFunc(motion);
+    glutReshapeFunc(reshape);///範例是resize
+    glutMainLoop();
+
+}
+
+```
+
+
 
 
