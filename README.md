@@ -2932,5 +2932,24 @@ glmScale(模型名稱,大小.0)
 ```
  glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
 ```
+## 攝影機
+```C
+void reshape(int w,int h){///不能 整數除
+    float ar = (float) w/(float) h;
+    glViewport(0,0,w,h);
+    glMatrixMode(GL_PROJECTION);///3D變2D
+    glLoadIdentity();
+    gluPerspective(60,ar,0.1,100);
 
+    glMatrixMode(GL_MODELVIEW);///3D Model+view
+    glLoadIdentity();
+    gluLookAt(0,0,3, ///eye
+              0,0,0, ///center看哪裡
+              0,1,0);///up向量
+}
+```
+## main裡加上
+```C
+ glutReshapeFunc(reshape)
+```
 
