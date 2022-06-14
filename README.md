@@ -2812,7 +2812,7 @@ int main(int argc, char *argv[])
 4. 整學期大複習-示範期末作品怎麼做
 ```
 ## 怎把期末作業做出來
-<<<環境的部分
+>>>環境的部分
 ```
 1.開啟codeblocks
 2.File->New->project->GLUT專案->打上專案名稱
@@ -2850,7 +2850,7 @@ int main(int argc, char *argv[])
  }
 ```
 ## 打光
-<<<函示呼叫
+>>>函示呼叫
 ```C
 const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
 const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -2862,7 +2862,7 @@ const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
 const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
 const GLfloat high_shininess[] = { 100.0f };
 ```
-<<<函示宣告
+>>>函示宣告
 ```C
  glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -2906,7 +2906,7 @@ int myTexture(char * filename)
 ```C
 GLMmodel *(obj檔案的名稱)=NULL;
 ```
-<<<在void display裡加入(一個關節一段)
+<<< 在void display裡加入(一個關節一段)
 ## 如果模型太大
 ```
 glmScale(模型名稱,大小.0)
@@ -2922,7 +2922,7 @@ glmScale(模型名稱,大小.0)
         glmDraw(關節名稱,GLM_TEXTURE);///劃出模型
     glPopMatrix();
 ```
-<<<main裡加上
+>>>main裡加上
 ```C
     glutDisplayFunc(display);///顯示用的函式
     glutIdleFunc(display);
