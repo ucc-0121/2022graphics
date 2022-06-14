@@ -2953,3 +2953,9 @@ void reshape(int w,int h){///不能 整數除
  glutReshapeFunc(reshape)
 ```
 
+## TRT 調整步驟(目前結果)
+```
+1. 先調整最下面的Translate改變中心點
+2.改變Rotate數值改變旋轉角度
+3.最後調整最上面的Translate將手臂位置移回原處
+```
