@@ -2927,6 +2927,10 @@ glmScale(模型名稱,大小.0)
     glutDisplayFunc(display);///顯示用的函式
     glutIdleFunc(display);
 ```
-
+## 怎麼辦怎麼立體感沒出來!!!
+>>> 在main裡加上
+```
+ glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);
+```
 
 
