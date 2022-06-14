@@ -2959,3 +2959,34 @@ void reshape(int w,int h){///不能 整數除
 2.改變Rotate數值改變旋轉角度
 3.最後調整最上面的Translate將手臂位置移回原處
 ```
+## 想要移動各個關節(Mouse keyboard)
+```C
+void myWrite()
+{
+    if(fout == NULL)fout=fopen("file.txt","w+");
+
+    for(int i = 0;i<20;i++)
+    {
+        printf("%.1f",angle[i]);///小黑印出來
+        fprintf(fout,"%.1f",angle[i]);///檔案印出來
+    }///這裡老師沒有fclose
+}
+void keyboard(unsigned char key,int x,int y)
+{
+    if(key=='0') angleID=0;
+    if(key=='1') angleID=1;
+    if(key=='2') angleID=2;
+    if(key=='3') angleID=3;
+}
+void mouse(int button,int state,int x,int y)
+{
+    oldX=x;
+}
+void motion(int x,int y)
+{
+    angle[angleID]+=(x-oldX);
+    myWrite();
+    oldX=x;
+    glutPostRedisplay();
+}
+```
