@@ -2803,7 +2803,130 @@ int main(int argc, char *argv[])
 }
 
 ```
+# Week17
+## 電腦圖學 Week17 2022-06-14
+```
+1. 期末作品繳交方式
+2. 期末作品評分方式
+3. 網友問 push matrix 和 pop matrix 事件
+4. 整學期大複習-示範期末作品怎麼做
+```
+## 怎把期末作業做出來
+<<<環境的部分
+```
+1.開啟codeblocks
+2.File->New->project->GLUT專案->打上專案名稱
+3.Q:如何改變工作目錄?
+   A1:點擊專案的main按右鍵->Notepad++
+   A2:找到working_dir將路徑改成小數點
+   A3:複製freeglut裡的dll檔案貼上到專案檔案裡
+4.opencv的設定()
 
+
+
+5.貼上10行程式碼
+```
+## 程式碼的部分
+>>>基本十行
+```C
+#include <GL/glut.h>
+ void display()
+ {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glColor3f(1,1,0);
+    glutSolidTeapot(0.3);
+
+    glutSwapBuffers();
+ }
+ int main(int argc, char *argv[])//main()主函式 進階版
+ {
+    glutInit(&argc,argv);//把參數送給glutInit初始化
+    glutInitDisplayMode(GLUT_DOUBLE|GLUT_DEPTH);//雙緩衝區+3D深度功能
+    glutCreateWindow("第02週的程式喔!!");//開GLUT視窗
+
+    glutDisplayFunc(display);//顯示用的函式
+
+    glutMainLoop();
+ }
+```
+## 打光
+<<<函示呼叫
+```C
+const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
+const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+
+const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat high_shininess[] = { 100.0f };
+```
+<<<函示宣告
+```C
+ glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+```
+## 貼圖
+>>>#include <GL/glut.h>,main裡加上myTexture();
+```C
+int myTexture(char * filename)
+{
+    IplImage * img = cvLoadImage(filename); ///OpenCV讀圖
+    cvCvtColor(img,img, CV_BGR2RGB); ///OpenCV轉色彩 (需要cv.h)
+    glEnable(GL_TEXTURE_2D); ///1. 開啟貼圖功能
+    GLuint id; ///準備一個 unsigned int 整數, 叫 貼圖ID
+    glGenTextures(1, &id); /// 產生Generate 貼圖ID
+    glBindTexture(GL_TEXTURE_2D, id); ///綁定bind 貼圖ID
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); /// 貼圖參數, 超過包裝的範圖T, 就重覆貼圖
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); /// 貼圖參數, 超過包裝的範圖S, 就重覆貼圖
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); /// 貼圖參數, 放大時的內插, 用最近點
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); /// 貼圖參數, 縮小時的內插, 用最近點
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img->width, img->height, 0, GL_RGB, GL_UNSIGNED_BYTE, img->imageData);
+    return id;
+}
+```
+## 帶入3D模型
+>>>#include "glm.h"
+```C
+GLMmodel *(obj檔案的名稱)=NULL;
+```
+<<<在void display裡加入(一個關節一段)
+## 如果模型太大
+```
+glmScale(模型名稱,大小.0)
+```
+```C
+     if(關節名稱==NULL)
+        {
+            pmodel=glmReadOBJ("data/關節名稱.obj");
+            glmUnitize(關節名稱);
+            glmFacetNormals(關節名稱);
+            glmVertexNormals(關節名稱,90);
+        }
+        glmDraw(關節名稱,GLM_TEXTURE);///劃出模型
+    glPopMatrix();
+```
+<<<main裡加上
+```C
+    glutDisplayFunc(display);///顯示用的函式
+    glutIdleFunc(display);
+```
 
 
 
