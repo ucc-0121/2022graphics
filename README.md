@@ -2990,3 +2990,10 @@ void motion(int x,int y)
     glutPostRedisplay();
 }
 ```
+## main裡要記得宣告!!!
+```C
+glutMouseFunc(mouse);
+glutMotionFunc(motion);
+glutKeyboardFunc(keyboard);
+
+```
